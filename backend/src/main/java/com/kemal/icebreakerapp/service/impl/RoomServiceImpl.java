@@ -41,4 +41,11 @@ public class RoomServiceImpl implements RoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
         return roomMapper.toDTO(room);
     }
+
+    @Override
+    public RoomDTO getRoomByUuid(String uuid) {
+        Room room = roomRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+        return roomMapper.toDTO(room);
+    }
 }

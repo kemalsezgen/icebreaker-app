@@ -28,9 +28,9 @@ public class RoomController {
         return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RoomDTO> getRoomById(@PathVariable Long id) {
-        RoomDTO room = roomService.getRoomById(id);
+    @GetMapping("/{uuid}")
+    public ResponseEntity<RoomDTO> getRoomByUuid(@PathVariable String uuid) {
+        RoomDTO room = roomService.getRoomByUuid(uuid);
         return new ResponseEntity<>(room, HttpStatus.OK);
     }
 }

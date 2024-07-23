@@ -7,4 +7,5 @@ public interface RoomService {
     List<RoomDTO> getAllRooms();
     RoomDTO createRoom(RoomDTO roomDTO);
     RoomDTO getRoomById(Long id);
+    RoomDTO getRoomByUuid(String uuid);
 }
