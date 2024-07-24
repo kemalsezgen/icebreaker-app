@@ -2,6 +2,8 @@ package com.kemal.icebreakerapp.controller;
 
 import com.kemal.icebreakerapp.dto.AnswerDTO;
 import com.kemal.icebreakerapp.service.AnswerService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@NoArgsConstructor
+@AllArgsConstructor
 @RequestMapping("/answers")
 public class AnswerController {
 
