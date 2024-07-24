@@ -1,12 +1,13 @@
 package com.kemal.icebreakerapp.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RoomDTO {
     private Long id;
     private String roomName;
