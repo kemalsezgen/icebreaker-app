@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.home-page, .create-room-page, .join-room-page, .room-page {
+  margin: 20px;
+}
+
+.join-room-page-sub, .create-room-page-sub {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.invite-code-textbox, .create-room-textbox {
+  border: 2px solid red;
+}
