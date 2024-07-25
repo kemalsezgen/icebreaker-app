@@ -1,4 +1,4 @@
-package com.kemal.icebreakerapp.model;
+package com.kemal.icebreakerapp.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

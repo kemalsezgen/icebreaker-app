@@ -1,6 +1,6 @@
 package com.kemal.icebreakerapp.service;
 
-import com.kemal.icebreakerapp.dto.QuestionDTO;
+import com.kemal.icebreakerapp.model.dto.QuestionDTO;
 import java.util.List;
 
 public interface QuestionService {

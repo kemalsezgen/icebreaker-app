@@ -1,6 +1,6 @@
 package com.kemal.icebreakerapp.controller;
 
-import com.kemal.icebreakerapp.dto.QuestionDTO;
+import com.kemal.icebreakerapp.model.dto.QuestionDTO;
 import com.kemal.icebreakerapp.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

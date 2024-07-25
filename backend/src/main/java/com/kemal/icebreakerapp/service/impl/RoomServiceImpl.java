@@ -1,8 +1,8 @@
 package com.kemal.icebreakerapp.service.impl;
 
-import com.kemal.icebreakerapp.dto.RoomDTO;
+import com.kemal.icebreakerapp.model.dto.RoomDTO;
 import com.kemal.icebreakerapp.mapper.RoomMapper;
-import com.kemal.icebreakerapp.model.Room;
+import com.kemal.icebreakerapp.model.entity.Room;
 import com.kemal.icebreakerapp.repository.RoomRepository;
 import com.kemal.icebreakerapp.service.RoomService;
 import com.kemal.icebreakerapp.exception.ResourceNotFoundException;

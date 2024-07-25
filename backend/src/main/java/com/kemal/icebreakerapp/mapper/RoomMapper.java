@@ -1,7 +1,7 @@
 package com.kemal.icebreakerapp.mapper;
 
-import com.kemal.icebreakerapp.dto.RoomDTO;
-import com.kemal.icebreakerapp.model.Room;
+import com.kemal.icebreakerapp.model.dto.RoomDTO;
+import com.kemal.icebreakerapp.model.entity.Room;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -17,6 +17,7 @@ public class RoomMapper {
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setId(room.getId());
         roomDTO.setRoomName(room.getRoomName());
+        roomDTO.setHostUserName(room.getHostUserName());
         roomDTO.setUuid(room.getUuid());
         return roomDTO;
     }
@@ -29,6 +30,7 @@ public class RoomMapper {
         Room room = new Room();
         room.setId(roomDTO.getId());
         room.setRoomName(roomDTO.getRoomName());
+        room.setHostUserName(roomDTO.getHostUserName());
         if (roomDTO.getUuid() == null) {
             room.setUuid(UUID.randomUUID().toString());
         } else {

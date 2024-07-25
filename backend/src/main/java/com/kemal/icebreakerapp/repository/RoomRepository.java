@@ -1,6 +1,6 @@
 package com.kemal.icebreakerapp.repository;
 
-import com.kemal.icebreakerapp.model.Room;
+import com.kemal.icebreakerapp.model.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

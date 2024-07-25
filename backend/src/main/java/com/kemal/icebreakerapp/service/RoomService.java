@@ -1,6 +1,6 @@
 package com.kemal.icebreakerapp.service;
 
-import com.kemal.icebreakerapp.dto.RoomDTO;
+import com.kemal.icebreakerapp.model.dto.RoomDTO;
 import java.util.List;
 
 public interface RoomService {

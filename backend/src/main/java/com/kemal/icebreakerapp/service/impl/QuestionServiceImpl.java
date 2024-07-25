@@ -1,8 +1,8 @@
 package com.kemal.icebreakerapp.service.impl;
 
-import com.kemal.icebreakerapp.dto.QuestionDTO;
+import com.kemal.icebreakerapp.model.dto.QuestionDTO;
 import com.kemal.icebreakerapp.mapper.QuestionMapper;
-import com.kemal.icebreakerapp.model.Question;
+import com.kemal.icebreakerapp.model.entity.Question;
 import com.kemal.icebreakerapp.repository.QuestionRepository;
 import com.kemal.icebreakerapp.service.QuestionService;
 import com.kemal.icebreakerapp.exception.ResourceNotFoundException;

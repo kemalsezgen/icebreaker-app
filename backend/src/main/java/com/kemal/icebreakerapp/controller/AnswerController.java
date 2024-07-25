@@ -1,6 +1,6 @@
 package com.kemal.icebreakerapp.controller;
 
-import com.kemal.icebreakerapp.dto.AnswerDTO;
+import com.kemal.icebreakerapp.model.dto.AnswerDTO;
 import com.kemal.icebreakerapp.service.AnswerService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

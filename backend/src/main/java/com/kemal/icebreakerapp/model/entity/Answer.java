@@ -1,5 +1,6 @@
-package com.kemal.icebreakerapp.model;
+package com.kemal.icebreakerapp.model.entity;
 
+import com.kemal.icebreakerapp.model.enums.AnswerType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,5 +17,5 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
-    private Boolean answer;
+    private AnswerType answer;
 }

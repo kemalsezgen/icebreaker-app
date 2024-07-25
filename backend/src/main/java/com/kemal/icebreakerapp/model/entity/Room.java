@@ -1,4 +1,4 @@
-package com.kemal.icebreakerapp.model;
+package com.kemal.icebreakerapp.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
