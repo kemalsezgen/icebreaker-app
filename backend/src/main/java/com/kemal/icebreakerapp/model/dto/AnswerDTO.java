@@ -1,5 +1,6 @@
-package com.kemal.icebreakerapp.dto;
+package com.kemal.icebreakerapp.model.dto;
 
+import com.kemal.icebreakerapp.model.enums.AnswerType;
 import lombok.*;
 
 @Data
@@ -13,5 +14,5 @@ public class AnswerDTO {
     private String userName;
     private Long questionId;
     private Long roomId;
-    private Boolean answer;
+    private AnswerType answer;
 }

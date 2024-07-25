@@ -1,4 +1,4 @@
-package com.kemal.icebreakerapp.dto;
+package com.kemal.icebreakerapp.model.dto;
 
 import lombok.Data;
 import lombok.Getter;

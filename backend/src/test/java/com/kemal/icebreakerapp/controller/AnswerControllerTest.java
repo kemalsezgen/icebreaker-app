@@ -1,7 +1,8 @@
 package com.kemal.icebreakerapp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kemal.icebreakerapp.dto.AnswerDTO;
+import com.kemal.icebreakerapp.model.dto.AnswerDTO;
+import com.kemal.icebreakerapp.model.enums.AnswerType;
 import com.kemal.icebreakerapp.service.AnswerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class AnswerControllerTest {
     void setUp() {
         AnswerDTO answer1 = AnswerDTO.builder()
                 .id(1L)
-                .answer(Boolean.TRUE)
+                .answer(AnswerType.YES)
                 .roomId(1L)
                 .questionId(1L)
                 .userName("UserName1")
@@ -49,7 +50,7 @@ class AnswerControllerTest {
 
         AnswerDTO answer2 = AnswerDTO.builder()
                 .id(2L)
-                .answer(Boolean.FALSE)
+                .answer(AnswerType.NO)
                 .roomId(2L)
                 .questionId(2L)
                 .userName("UserName2")
@@ -67,12 +68,12 @@ class AnswerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].answer").value(Boolean.TRUE))
+                .andExpect(jsonPath("$[0].answer").value(AnswerType.YES))
                 .andExpect(jsonPath("$[0].userName").value("UserName1"))
                 .andExpect(jsonPath("$[0].roomId").value(1L))
                 .andExpect(jsonPath("$[0].questionId").value(1L))
                 .andExpect(jsonPath("$[1].id").value(2L))
-                .andExpect(jsonPath("$[1].answer").value(Boolean.FALSE))
+                .andExpect(jsonPath("$[1].answer").value(AnswerType.NO))
                 .andExpect(jsonPath("$[1].userName").value("UserName2"))
                 .andExpect(jsonPath("$[1].roomId").value(2L))
                 .andExpect(jsonPath("$[1].questionId").value(2L));
@@ -84,7 +85,7 @@ class AnswerControllerTest {
                 .userName("UserNameTest")
                 .roomId(3L)
                 .questionId(3L)
-                .answer(Boolean.FALSE)
+                .answer(AnswerType.NO)
                 .build();
 
         when(answerService.createAnswer(answerDTO)).thenReturn(answerDTO);
@@ -96,7 +97,7 @@ class AnswerControllerTest {
                 .andExpect(jsonPath("$.userName").value("UserNameTest"))
                 .andExpect(jsonPath("$.roomId").value(3L))
                 .andExpect(jsonPath("$.questionId").value(3L))
-                .andExpect(jsonPath("$.answer").value(Boolean.FALSE));
+                .andExpect(jsonPath("$.answer").value(AnswerType.NO));
     }
 
     @Test
@@ -104,7 +105,7 @@ class AnswerControllerTest {
         Long answerId = 1L;
         AnswerDTO answerDTO = AnswerDTO.builder()
                 .id(answerId)
-                .answer(Boolean.FALSE)
+                .answer(AnswerType.NO)
                 .userName("UserNameTest")
                 .roomId(3L)
                 .questionId(3L)
@@ -116,7 +117,7 @@ class AnswerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(answerId))
-                .andExpect(jsonPath("$.answer").value(Boolean.FALSE))
+                .andExpect(jsonPath("$.answer").value(AnswerType.NO))
                 .andExpect(jsonPath("$.userName").value("UserNameTest"))
                 .andExpect(jsonPath("$.roomId").value(3L))
                 .andExpect(jsonPath("$.questionId").value(3L));

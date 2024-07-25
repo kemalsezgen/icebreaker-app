@@ -1,9 +1,9 @@
 package com.kemal.icebreakerapp.mapper;
 
-import com.kemal.icebreakerapp.dto.AnswerDTO;
-import com.kemal.icebreakerapp.model.Answer;
-import com.kemal.icebreakerapp.model.Question;
-import com.kemal.icebreakerapp.model.Room;
+import com.kemal.icebreakerapp.model.dto.AnswerDTO;
+import com.kemal.icebreakerapp.model.entity.Answer;
+import com.kemal.icebreakerapp.model.entity.Question;
+import com.kemal.icebreakerapp.model.entity.Room;
 import org.springframework.stereotype.Component;
 
 @Component

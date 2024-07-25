@@ -1,10 +1,10 @@
 package com.kemal.icebreakerapp.service.impl;
 
-import com.kemal.icebreakerapp.dto.AnswerDTO;
+import com.kemal.icebreakerapp.model.dto.AnswerDTO;
 import com.kemal.icebreakerapp.mapper.AnswerMapper;
-import com.kemal.icebreakerapp.model.Answer;
-import com.kemal.icebreakerapp.model.Question;
-import com.kemal.icebreakerapp.model.Room;
+import com.kemal.icebreakerapp.model.entity.Answer;
+import com.kemal.icebreakerapp.model.entity.Question;
+import com.kemal.icebreakerapp.model.entity.Room;
 import com.kemal.icebreakerapp.repository.AnswerRepository;
 import com.kemal.icebreakerapp.repository.QuestionRepository;
 import com.kemal.icebreakerapp.repository.RoomRepository;
