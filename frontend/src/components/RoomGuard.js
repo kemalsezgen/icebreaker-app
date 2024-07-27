@@ -9,18 +9,20 @@ const RoomGuard = ({ children }) => {
   const [roomExists, setRoomExists] = useState(false);
 
   useEffect(() => {
-    const checkRoomExists = async () => {
-      getRoomById(roomId)
-        .then((res) => {
-          setRoomExists(true);
-        })
-        .catch((err) => {
-          console.log("Room does not exist:", roomId);
-          setRoomExists(false);
-        });
-      setLoading(false);
-    };
-    checkRoomExists();
+    console.log("room exist:", roomExists);
+  }, [roomExists]);
+
+  useEffect(() => {
+    getRoomById(roomId)
+      .then((res) => {
+        setRoomExists(true);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("error:", err);
+        setRoomExists(false);
+        setLoading(false);
+      });
   }, [roomId]);
 
   if (loading) {
@@ -28,6 +30,7 @@ const RoomGuard = ({ children }) => {
   }
 
   if (!roomExists) {
+    console.log("wtf");
     return <Navigate to="/not-found" replace />;
   }
 

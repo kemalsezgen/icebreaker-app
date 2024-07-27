@@ -9,7 +9,6 @@ const CreateRoomPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("roomName:", roomName);
     setEmptyClicked(false);
   }, [roomName]);
 
@@ -20,7 +19,6 @@ const CreateRoomPage = () => {
       };
       createRoom(createRoomDto)
         .then((response) => {
-          console.log("response", response);
           const uuid = response.data.uuid;
           const inviteLink = `http://localhost:3000/room/${uuid}`;
           alert(
