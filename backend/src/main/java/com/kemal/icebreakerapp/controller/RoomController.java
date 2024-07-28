@@ -1,5 +1,7 @@
 package com.kemal.icebreakerapp.controller;
 
+import com.kemal.icebreakerapp.model.dto.JoinRoomDTO;
+import com.kemal.icebreakerapp.model.dto.JoinRoomRequest;
 import com.kemal.icebreakerapp.model.dto.RoomDTO;
 import com.kemal.icebreakerapp.service.RoomService;
 import lombok.AllArgsConstructor;
@@ -32,9 +34,14 @@ public class RoomController {
         return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<RoomDTO> getRoomByUuid(@PathVariable String uuid) {
-        RoomDTO room = roomService.getRoomByUuid(uuid);
+    @GetMapping("/{code}")
+    public ResponseEntity<RoomDTO> getRoomByCode(@PathVariable String code) {
+        RoomDTO room = roomService.getRoomByCode(code);
         return new ResponseEntity<>(room, HttpStatus.OK);
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<JoinRoomDTO> joinRoom(@RequestBody JoinRoomRequest request) {
+        return new ResponseEntity<>(roomService.joinRoom(request), HttpStatus.OK);
     }
 }
