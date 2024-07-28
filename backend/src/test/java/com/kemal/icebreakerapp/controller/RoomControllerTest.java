@@ -42,16 +42,16 @@ public class RoomControllerTest {
     void setUp() {
         RoomDTO room1 = RoomDTO.builder()
                 .id(1L)
-                .roomName("Room1")
-                .hostUserName("Host1")
-                .uuid("uuid1")
+                .name("Room1")
+                .createdBy("Host1")
+                .code("uuid1")
                 .build();
 
         RoomDTO room2 = RoomDTO.builder()
                 .id(2L)
-                .roomName("Room2")
-                .hostUserName("Host2")
-                .uuid("uuid2")
+                .name("Room2")
+                .createdBy("Host2")
+                .code("uuid2")
                 .build();
 
         roomList = Arrays.asList(room1, room2);
@@ -67,21 +67,21 @@ public class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].roomName").value("Room1"))
-                .andExpect(jsonPath("$[0].hostUserName").value("Host1"))
-                .andExpect(jsonPath("$[0].uuid").value("uuid1"))
+                .andExpect(jsonPath("$[0].name").value("Room1"))
+                .andExpect(jsonPath("$[0].createdBy").value("Host1"))
+                .andExpect(jsonPath("$[0].code").value("uuid1"))
                 .andExpect(jsonPath("$[1].id").value(2L))
-                .andExpect(jsonPath("$[1].roomName").value("Room2"))
-                .andExpect(jsonPath("$[1].hostUserName").value("Host2"))
-                .andExpect(jsonPath("$[1].uuid").value("uuid2"));
+                .andExpect(jsonPath("$[1].name").value("Room2"))
+                .andExpect(jsonPath("$[1].createdBy").value("Host2"))
+                .andExpect(jsonPath("$[1].code").value("uuid2"));
     }
 
     @Test
     public void createRoom_ShouldCreateAndReturnRoom() throws Exception {
         RoomDTO roomDTO = RoomDTO.builder()
-                .roomName("New Room")
-                .hostUserName("New Host")
-                .uuid("new-uuid")
+                .name("New Room")
+                .createdBy("New Host")
+                .code("new-code")
                 .build();
 
         when(roomService.createRoom(roomDTO)).thenReturn(roomDTO);
@@ -90,29 +90,29 @@ public class RoomControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(roomDTO)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.roomName").value("New Room"))
-                .andExpect(jsonPath("$.hostUserName").value("New Host"))
-                .andExpect(jsonPath("$.uuid").value("new-uuid"));
+                .andExpect(jsonPath("$.name").value("New Room"))
+                .andExpect(jsonPath("$.createdBy").value("New Host"))
+                .andExpect(jsonPath("$.code").value("new-code"));
     }
 
     @Test
     public void getRoomByUuid_ShouldReturnRoom() throws Exception {
-        String uuid = "uuid1";
+        String code = "uuid1";
         RoomDTO roomDTO = RoomDTO.builder()
                 .id(1L)
-                .roomName("Room1")
-                .hostUserName("Host1")
-                .uuid(uuid)
+                .name("Room1")
+                .createdBy("Host1")
+                .code(code)
                 .build();
 
-        when(roomService.getRoomByUuid(uuid)).thenReturn(roomDTO);
+        when(roomService.getRoomByCode(code)).thenReturn(roomDTO);
 
-        mockMvc.perform(get("/rooms/{uuid}", uuid)
+        mockMvc.perform(get("/rooms/{code}", code)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.roomName").value("Room1"))
-                .andExpect(jsonPath("$.hostUserName").value("Host1"))
-                .andExpect(jsonPath("$.uuid").value(uuid));
+                .andExpect(jsonPath("$.name").value("Room1"))
+                .andExpect(jsonPath("$.createdBy").value("Host1"))
+                .andExpect(jsonPath("$.code").value(code));
     }
 }

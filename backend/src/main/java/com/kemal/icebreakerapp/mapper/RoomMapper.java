@@ -16,9 +16,9 @@ public class RoomMapper {
 
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setId(room.getId());
-        roomDTO.setRoomName(room.getRoomName());
-        roomDTO.setHostUserName(room.getHostUserName());
-        roomDTO.setUuid(room.getUuid());
+        roomDTO.setName(room.getName());
+        roomDTO.setCreatedBy(room.getCreatedBy());
+        roomDTO.setCode(room.getCode());
         return roomDTO;
     }
 
@@ -29,12 +29,12 @@ public class RoomMapper {
 
         Room room = new Room();
         room.setId(roomDTO.getId());
-        room.setRoomName(roomDTO.getRoomName());
-        room.setHostUserName(roomDTO.getHostUserName());
-        if (roomDTO.getUuid() == null) {
-            room.setUuid(UUID.randomUUID().toString());
+        room.setName(roomDTO.getName());
+        room.setCreatedBy(roomDTO.getCreatedBy());
+        if (roomDTO.getCode() == null) {
+            room.setCode(UUID.randomUUID().toString());
         } else {
-            room.setUuid(roomDTO.getUuid());
+            room.setCode(roomDTO.getCode());
         }
         return room;
     }
