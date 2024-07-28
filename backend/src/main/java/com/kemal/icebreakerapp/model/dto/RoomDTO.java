@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class RoomDTO {
     private Long id;
+    private String uuid;
     private String roomName;
     private String hostUserName;
-    private String uuid;
 }
