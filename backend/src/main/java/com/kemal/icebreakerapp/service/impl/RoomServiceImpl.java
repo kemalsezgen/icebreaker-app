@@ -8,6 +8,7 @@ import com.kemal.icebreakerapp.mapper.RoomUserMapper;
 import com.kemal.icebreakerapp.model.entity.Room;
 import com.kemal.icebreakerapp.model.entity.RoomUser;
 import com.kemal.icebreakerapp.model.entity.User;
+import com.kemal.icebreakerapp.model.enums.RoomUserStatus;
 import com.kemal.icebreakerapp.repository.RoomRepository;
 import com.kemal.icebreakerapp.repository.RoomUserRepository;
 import com.kemal.icebreakerapp.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -88,27 +90,60 @@ public class RoomServiceImpl implements RoomService {
      */
     @Override
     public JoinRoomDTO joinRoom(JoinRoomRequest request) {
-        // user saying he was there
         if (request.getToken() != null) {
-            RoomUser roomUser = roomUserRepository.findByToken(request.getToken());
-            //RoomUserDTO roomUserDTO = roomUserMapper.toDTO(roomUser);
-            if (roomUser == null) {
-                throw new ResourceNotFoundException("User not found, wrong token.");
-            }
-
-            JoinRoomDTO joinRoomDTO = new JoinRoomDTO();
-            if (roomUser.getRoomCode().equals(request.getRoomCode())) {
-                Optional<User> oldUser = userRepository.findById(roomUser.getUserId());
-                if (oldUser.isPresent()) {
-                    joinRoomDTO.setUsername(oldUser.get().getUsername());
-                    joinRoomDTO.setRoomCode(request.getRoomCode());
-                    joinRoomDTO.setToken(request.getToken());
-                    return joinRoomDTO;
-                } else {
-                    throw new ResourceNotFoundException("User not found");
-                }
-            }
+            return handleExistingUser(request);
+        } else {
+            return handleNewUser(request);
         }
-        return null;
+    }
+
+    private JoinRoomDTO handleExistingUser(JoinRoomRequest request) {
+        RoomUser roomUser = roomUserRepository.findByToken(request.getToken());
+        if (roomUser == null) {
+            throw new ResourceNotFoundException("User not found, wrong token.");
+        }
+
+        if (roomUser.getRoomCode().equals(request.getRoomCode())) {
+            return getExistingUserDetails(roomUser, request.getToken(), request.getRoomCode());
+        } else {
+            throw new ResourceNotFoundException("Room code does not match.");
+        }
+    }
+
+    private JoinRoomDTO handleNewUser(JoinRoomRequest request) {
+        User newUser = new User();
+        newUser.setUsername(request.getUsername());
+        userRepository.save(newUser);
+
+        RoomUser roomUser = createRoomUser(request.getRoomCode(), newUser.getId());
+        roomUserRepository.save(roomUser);
+
+        return buildJoinRoomDTO(request.getUsername(), request.getRoomCode(), roomUser.getToken());
+    }
+
+    private RoomUser createRoomUser(String roomCode, Long userId) {
+        RoomUser roomUser = new RoomUser();
+        roomUser.setRoomCode(roomCode);
+        roomUser.setUserId(userId);
+        roomUser.setStatus(RoomUserStatus.ACTIVE);
+        roomUser.setToken(UUID.randomUUID().toString());
+        return roomUser;
+    }
+
+    private JoinRoomDTO getExistingUserDetails(RoomUser roomUser, String token, String roomCode) {
+        Optional<User> oldUser = userRepository.findById(roomUser.getUserId());
+        if (oldUser.isPresent()) {
+            return buildJoinRoomDTO(oldUser.get().getUsername(), roomCode, token);
+        } else {
+            throw new ResourceNotFoundException("User not found");
+        }
+    }
+
+    private JoinRoomDTO buildJoinRoomDTO(String username, String roomCode, String token) {
+        JoinRoomDTO joinRoomDTO = new JoinRoomDTO();
+        joinRoomDTO.setUsername(username);
+        joinRoomDTO.setRoomCode(roomCode);
+        joinRoomDTO.setToken(token);
+        return joinRoomDTO;
     }
 }
