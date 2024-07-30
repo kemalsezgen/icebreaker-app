@@ -21,4 +21,6 @@ public class RoomUser {
 
     @Enumerated(EnumType.STRING)
     private RoomUserStatus status;
+
+    private String token;
 }
