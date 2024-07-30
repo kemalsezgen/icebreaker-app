@@ -8,4 +8,5 @@ import lombok.Setter;
 public class JoinRoomDTO {
     private String roomCode;
     private String username;
+    private String token;
 }
