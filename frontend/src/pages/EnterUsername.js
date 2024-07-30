@@ -1,18 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import WebSocketComponent from "../components/WebSocket";
+import { joinRoom } from "../services/api";
+import RoomPage from "./RoomPage";
+import { Context } from "../context";
 
 const EnterUsername = () => {
   const { roomId } = useParams();
   const [username, setUsername] = useState("");
   const [joined, setJoined] = useState(false);
+  const {
+    setToken,
+    setUsername: setGlobalUsername,
+    setRoomName,
+    setJoinedToRoom,
+  } = useContext(Context);
 
-  useEffect(() => {
-    console.log("roomIddddd:", roomId);
-  }, [roomId]);
-
-  const joinRoom = () => {
-    setJoined(true);
+  const handleJoinRoom = async () => {
+    try {
+      const joinRoomRequest = {
+        roomCode: roomId,
+        username: username,
+      };
+      const res = await joinRoom(joinRoomRequest);
+      const { token, roomName } = res.data;
+      localStorage.setItem("token", token);
+      setToken(token);
+      setGlobalUsername(username);
+      setRoomName(roomName);
+      setJoinedToRoom(true);
+      setJoined(true);
+    } catch (err) {
+      console.error("Error joining room:", err);
+    }
   };
 
   return (
@@ -25,10 +44,10 @@ const EnterUsername = () => {
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter your username"
           />
-          <button onClick={() => joinRoom()}>Join Room</button>
+          <button onClick={handleJoinRoom}>Join Room</button>
         </div>
       ) : (
-        <WebSocketComponent roomUuid={roomId} username={username} />
+        <RoomPage />
       )}
     </div>
   );

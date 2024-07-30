@@ -14,9 +14,26 @@ import Header from "./layouts/Header";
 
 function App() {
   const [inviteCode, setInviteCode] = useState("");
+  const [token, setToken] = useState();
+  const [joinedToRoom, setJoinedToRoom] = useState(false);
+  const [username, setUsername] = useState();
+  const [roomName, setRoomName] = useState();
+
+  const contextData = {
+    token,
+    setToken,
+    inviteCode,
+    setInviteCode,
+    joinedToRoom,
+    setJoinedToRoom,
+    username,
+    setUsername,
+    roomName,
+    setRoomName,
+  };
 
   return (
-    <Context.Provider value={{ inviteCode, setInviteCode }}>
+    <Context.Provider value={contextData}>
       <Router>
         <div className="App">
           <header className="App-header">

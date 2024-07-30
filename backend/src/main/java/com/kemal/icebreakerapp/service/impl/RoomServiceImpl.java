@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.UUID;
 
@@ -103,11 +102,13 @@ public class RoomServiceImpl implements RoomService {
             throw new ResourceNotFoundException("User not found, wrong token.");
         }
 
-        if (roomUser.getRoomCode().equals(request.getRoomCode())) {
-            return getExistingUserDetails(roomUser, request.getToken(), request.getRoomCode());
-        } else {
+        if (!roomUser.getRoomCode().equals(request.getRoomCode())) {
             throw new ResourceNotFoundException("Room code does not match.");
         }
+
+        Room room = roomRepository.findByCode(request.getRoomCode())
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+        return getExistingUserDetails(roomUser, request.getToken(), request.getRoomCode(), room.getName());
     }
 
     private JoinRoomDTO handleNewUser(JoinRoomRequest request) {
@@ -118,7 +119,9 @@ public class RoomServiceImpl implements RoomService {
         RoomUser roomUser = createRoomUser(request.getRoomCode(), newUser.getId());
         roomUserRepository.save(roomUser);
 
-        return buildJoinRoomDTO(request.getUsername(), request.getRoomCode(), roomUser.getToken());
+        Room room = roomRepository.findByCode(request.getRoomCode())
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+        return buildJoinRoomDTO(request.getUsername(), request.getRoomCode(), roomUser.getToken(), room.getName());
     }
 
     private RoomUser createRoomUser(String roomCode, Long userId) {
@@ -130,20 +133,18 @@ public class RoomServiceImpl implements RoomService {
         return roomUser;
     }
 
-    private JoinRoomDTO getExistingUserDetails(RoomUser roomUser, String token, String roomCode) {
-        Optional<User> oldUser = userRepository.findById(roomUser.getUserId());
-        if (oldUser.isPresent()) {
-            return buildJoinRoomDTO(oldUser.get().getUsername(), roomCode, token);
-        } else {
-            throw new ResourceNotFoundException("User not found");
-        }
+    private JoinRoomDTO getExistingUserDetails(RoomUser roomUser, String token, String roomCode, String roomName) {
+        User oldUser = userRepository.findById(roomUser.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return buildJoinRoomDTO(oldUser.getUsername(), roomCode, token, roomName);
     }
 
-    private JoinRoomDTO buildJoinRoomDTO(String username, String roomCode, String token) {
+    private JoinRoomDTO buildJoinRoomDTO(String username, String roomCode, String token, String roomName) {
         JoinRoomDTO joinRoomDTO = new JoinRoomDTO();
         joinRoomDTO.setUsername(username);
         joinRoomDTO.setRoomCode(roomCode);
         joinRoomDTO.setToken(token);
+        joinRoomDTO.setRoomName(roomName);
         return joinRoomDTO;
     }
 }

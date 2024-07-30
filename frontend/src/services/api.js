@@ -1,11 +1,21 @@
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8080";
+const ROOMS_URL = BASE_URL + "/rooms";
+const ROOM_USER_URL = BASE_URL + "/room-user";
 
 export async function getRoomById(id) {
-  return await axios.get(BASE_URL + `/rooms/${id}`);
+  return await axios.get(ROOMS_URL + `/${id}`);
 }
 
 export async function createRoom(createRoomDto) {
-  return axios.post(BASE_URL + `/rooms`, createRoomDto);
+  return axios.post(ROOMS_URL + createRoomDto);
+}
+
+export async function joinRoom(joinRoomRequest) {
+  return axios.post(ROOMS_URL + `/join`, joinRoomRequest);
+}
+
+export async function getRoomUserInformation(roomCode) {
+  return axios.get(ROOM_USER_URL + `/${roomCode}`);
 }
