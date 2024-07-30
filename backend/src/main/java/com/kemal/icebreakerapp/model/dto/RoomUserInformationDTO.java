@@ -1,13 +1,15 @@
 package com.kemal.icebreakerapp.model.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
+@Data
 @Getter
 @Setter
-public class JoinRoomDTO {
+public class RoomUserInformationDTO {
     private String roomName;
-    private String roomCode;
-    private String username;
-    private String token;
+    private List<String> usernameList;
 }
