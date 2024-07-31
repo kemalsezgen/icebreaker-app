@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.kemal.icebreakerapp.model.dto.JoinRoomDTO;
 import com.kemal.icebreakerapp.model.dto.RoomDTO;
 import com.kemal.icebreakerapp.service.RoomService;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ public class RoomControllerTest {
 
     private List<RoomDTO> roomList;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
@@ -78,21 +79,23 @@ public class RoomControllerTest {
 
     @Test
     public void createRoom_ShouldCreateAndReturnRoom() throws Exception {
+        JoinRoomDTO joinRoomDTO = new JoinRoomDTO();
+        joinRoomDTO.setRoomName("New Room");
+        joinRoomDTO.setUsername("New Host");
+
         RoomDTO roomDTO = RoomDTO.builder()
-                .name("New Room")
                 .createdBy("New Host")
-                .code("new-code")
+                .name("New Room")
                 .build();
 
-        when(roomService.createRoom(roomDTO)).thenReturn(roomDTO);
+        when(roomService.createRoom(roomDTO)).thenReturn(joinRoomDTO);
 
         mockMvc.perform(post("/rooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(roomDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("New Room"))
-                .andExpect(jsonPath("$.createdBy").value("New Host"))
-                .andExpect(jsonPath("$.code").value("new-code"));
+                .andExpect(jsonPath("$.username").value("New Host"));
     }
 
     @Test

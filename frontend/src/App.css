@@ -3,20 +3,49 @@
   box-sizing: border-box;
 }
 
-.App-header {
+.header-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header-title {
+  color: white;
+}
+
+.header-link:link,
+.header-link:visited,
+.header-link:hover,
+.header-link:active {
+  text-decoration: none;
+  color: white;
+}
+
+.header {
   background-color: #282c34;
   padding: 20px;
   color: white;
 }
 
-.home-page, .create-room-page, .join-room-page, .room-page {
+.create-room-page,
+.join-room-page {
+  display: flex;
+  justify-content: center;
+}
+
+.home-page,
+.create-room-page,
+.join-room-page,
+.room-page {
   margin: 20px;
 }
 
-.join-room-page-sub, .create-room-page-sub {
+.join-room-page-sub,
+.create-room-page-sub {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 20px;
+  width: 600px;
 }
 
 .buttons {
@@ -31,6 +60,15 @@ button {
   cursor: pointer;
 }
 
-.invite-code-textbox, .create-room-textbox {
+.create-room-textbox,
+.username-textbox,
+.invite-code-textbox {
+  height: 48px;
+}
+
+.invite-code-textbox-empty,
+.create-room-textbox-empty,
+.username-textbox-empty {
+  height: 48px;
   border: 2px solid red;
 }

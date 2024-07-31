@@ -29,8 +29,8 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<RoomDTO> createRoom(@RequestBody RoomDTO roomDTO) {
-        RoomDTO createdRoom = roomService.createRoom(roomDTO);
+    public ResponseEntity<JoinRoomDTO> createRoom(@RequestBody RoomDTO roomDTO) {
+        JoinRoomDTO createdRoom = roomService.createRoom(roomDTO);
         return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
     }
 

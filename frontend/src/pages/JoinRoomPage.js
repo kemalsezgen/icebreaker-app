@@ -20,10 +20,12 @@ const JoinRoomPage = () => {
 
   return (
     <div className="join-room-page">
-      <h2>Join a Room</h2>
       <div className="join-room-page-sub">
+        <h2>Join a Room</h2>
         <input
-          className={emptyClicked ? `invite-code-textbox` : ``}
+          className={
+            emptyClicked ? `invite-code-textbox-empty` : `invite-code-textbox`
+          }
           type="text"
           placeholder="Enter invite code"
           value={inviteCode}

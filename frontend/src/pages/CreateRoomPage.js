@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { createRoom } from "../services/api";
 
 const CreateRoomPage = () => {
-  const [roomName, setRoomName] = useState("");
+  const [roomName, setRoomName] = useState();
+  const [username, setUsername] = useState();
   const [emptyClicked, setEmptyClicked] = useState(false);
   const navigate = useNavigate();
 
@@ -13,18 +14,24 @@ const CreateRoomPage = () => {
   }, [roomName]);
 
   const handleCreateRoom = async () => {
-    if (roomName !== "") {
+    if (
+      roomName !== null &&
+      roomName !== undefined &&
+      username !== null &&
+      username !== undefined
+    ) {
       const createRoomDto = {
-        roomName,
+        name: roomName,
+        createdBy: username,
       };
       createRoom(createRoomDto)
         .then((response) => {
-          const uuid = response.data.uuid;
-          const inviteLink = `http://localhost:3000/room/${uuid}`;
-          alert(
-            `Room created! Invite your friends using this link: ${inviteLink}`
-          );
-          navigate(`/room/${uuid}`);
+          const code = response.data.roomCode;
+          const inviteLink = `http://localhost:3000/room/${code}`;
+          alert(`Room created! Invite your friends using this link: ${inviteLink}`);
+          const { token } = response.data;
+          localStorage.setItem("token", token);
+          navigate(`/room/${code}`);
         })
         .catch((error) => {
           console.error("There was an error creating the room!", error);
@@ -36,10 +43,21 @@ const CreateRoomPage = () => {
 
   return (
     <div className="create-room-page">
-      <h2>Create a Room</h2>
       <div className="create-room-page-sub">
+        <h2>Create a Room</h2>
         <input
-          className={emptyClicked ? `create-room-textbox` : ``}
+          className={
+            emptyClicked ? `username-textbox-empty` : `username-textbox`
+          }
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          className={
+            emptyClicked ? `create-room-textbox-empty` : `create-room-textbox`
+          }
           type="text"
           placeholder="Enter room name"
           value={roomName}

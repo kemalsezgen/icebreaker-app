@@ -47,10 +47,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomDTO createRoom(RoomDTO roomDTO) {
-        Room room = roomMapper.toEntity(roomDTO);
+    public JoinRoomDTO createRoom(RoomDTO request) {
+        Room room = roomMapper.toEntity(request);
         Room savedRoom = roomRepository.save(room);
-        return roomMapper.toDTO(savedRoom);
+
+        JoinRoomRequest joinRoomRequest = new JoinRoomRequest();
+        joinRoomRequest.setRoomCode(savedRoom.getCode());
+        joinRoomRequest.setUsername(savedRoom.getCreatedBy());
+        return joinRoom(joinRoomRequest);
     }
 
     @Override
@@ -60,33 +64,6 @@ public class RoomServiceImpl implements RoomService {
         return roomMapper.toDTO(room);
     }
 
-    /*
-    @Override
-    public JoinRoomDTO joinRoom(JoinRoomRequest request) {
-        Optional<Room> room = roomRepository.findByCode(request.getRoomCode());
-        /*
-        if (room.isPresent()) {
-            User user = new User();
-            user.setUsername(request.getUsername());
-            User createdUser = userRepository.save(user);
-
-            RoomUser roomUser = new RoomUser();
-            roomUser.setRoomCode(request.getRoomCode());
-            roomUser.setUserId(createdUser.getId());
-            roomUser.setStatus(RoomUserStatus.ACTIVE);
-            roomUserRepository.save(roomUser);
-
-            JoinRoomDTO joinRoomDTO = new JoinRoomDTO();
-            joinRoomDTO.setRoomCode(request.getRoomCode());
-            joinRoomDTO.setUsername(request.getUsername());
-
-            return joinRoomDTO;
-        } else {
-            throw new ResourceNotFoundException("Room Not Found");
-        }
-
-    }
-     */
     @Override
     public JoinRoomDTO joinRoom(JoinRoomRequest request) {
         if (request.getToken() != null) {
@@ -97,7 +74,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     private JoinRoomDTO handleExistingUser(JoinRoomRequest request) {
-        RoomUser roomUser = roomUserRepository.findByToken(request.getToken());
+        RoomUser roomUser = roomUserRepository.findByTokenAndRoomCode(request.getToken(), request.getRoomCode());
         if (roomUser == null) {
             throw new ResourceNotFoundException("User not found, wrong token.");
         }

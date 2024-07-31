@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface RoomUserRepository extends JpaRepository<RoomUser, Long> {
     RoomUser findByToken(String token);
+    RoomUser findByTokenAndRoomCode(String token, String roomCode);
     List<RoomUser> findByRoomCode(String roomCode);
 }
