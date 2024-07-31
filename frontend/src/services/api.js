@@ -9,7 +9,7 @@ export async function getRoomById(id) {
 }
 
 export async function createRoom(createRoomDto) {
-  return axios.post(ROOMS_URL + createRoomDto);
+  return axios.post(ROOMS_URL, createRoomDto);
 }
 
 export async function joinRoom(joinRoomRequest) {

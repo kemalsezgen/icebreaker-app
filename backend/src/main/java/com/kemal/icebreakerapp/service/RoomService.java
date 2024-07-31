@@ -18,7 +18,7 @@ public interface RoomService {
      * @param roomDTO
      * @return
      */
-    RoomDTO createRoom(RoomDTO roomDTO);
+    JoinRoomDTO createRoom(RoomDTO roomDTO);
 
     /**
      * Fetchs room by room code
