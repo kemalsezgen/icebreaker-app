@@ -36,7 +36,7 @@ function App() {
     <Context.Provider value={contextData}>
       <Router>
         <div className="App">
-          <header className="App-header">
+          <header className="header">
             <Header />
           </header>
           <main>

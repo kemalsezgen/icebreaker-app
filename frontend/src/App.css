@@ -26,6 +26,59 @@
   color: white;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */ 
+  height: 100vh;
+  position: relative;
+}
+
+.room-page {
+  text-align: center;
+}
+
+.update-username-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.update-username-container h2 {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.update-username-container div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.update-username-container input {
+  margin: 16px 0px;
+  padding: 5px;
+  width: 95%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.update-username-container input.input-error {
+  border: 1px solid red;
+}
+
+.update-username-container button {
+  padding: 5px 10px;
+}
+
+.update-username-container p {
+  color: red;
+}
+
 .create-room-page,
 .join-room-page {
   display: flex;
