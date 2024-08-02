@@ -24,3 +24,7 @@ export async function getRoomUserInformation(roomCode) {
 export async function updateUsername(userNameUpdateRequest) {
   return axios.put(USER_URL + `/update-username`, userNameUpdateRequest);
 }
+
+export async function logout(logoutRequest) {
+  return axios.put(ROOM_USER_URL + `/logout`, logoutRequest);
+}

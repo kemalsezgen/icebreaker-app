@@ -1,5 +1,6 @@
 package com.kemal.icebreakerapp.service.impl;
 
+import com.kemal.icebreakerapp.exception.PassiveUserTokenException;
 import com.kemal.icebreakerapp.model.dto.JoinRoomDTO;
 import com.kemal.icebreakerapp.model.dto.JoinRoomRequest;
 import com.kemal.icebreakerapp.model.dto.RoomDTO;
@@ -81,6 +82,10 @@ public class RoomServiceImpl implements RoomService {
 
         if (!roomUser.getRoomCode().equals(request.getRoomCode())) {
             throw new ResourceNotFoundException("Room code does not match.");
+        }
+
+        if (roomUser.getStatus() != RoomUserStatus.ACTIVE) {
+            throw new PassiveUserTokenException("This users token is passive.");
         }
 
         Room room = roomRepository.findByCode(request.getRoomCode())

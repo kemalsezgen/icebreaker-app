@@ -74,7 +74,9 @@ const RoomGuard = ({ children }) => {
     return <RoomPage />;
   }
 
-  return <>{children}</>;
+  if (joinedToRoom !== null && joinedToRoom === false) {
+    return <>{children}</>;
+  }
 };
 
 export default RoomGuard;
