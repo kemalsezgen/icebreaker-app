@@ -10,5 +10,5 @@ public interface RoomUserRepository extends JpaRepository<RoomUser, Long> {
     RoomUser findByToken(String token);
     RoomUser findByTokenAndRoomCode(String token, String roomCode);
     RoomUser findByTokenAndRoomCodeAndStatus(String token, String roomCode, RoomUserStatus status);
-    List<RoomUser> findByRoomCode(String roomCode);
+    List<RoomUser> findByRoomCodeAndStatus(String roomCode, RoomUserStatus status);
 }

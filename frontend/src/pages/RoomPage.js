@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { Context } from "../context";
-import { getRoomUserInformation, updateUsername } from "../services/api";
+import {
+  getRoomUserInformation,
+  logout,
+  updateUsername,
+} from "../services/api";
 
 const RoomPage = () => {
+  const navigate = useNavigate();
   const { roomId } = useParams();
   const { roomName, username, token, setUsername } = useContext(Context);
   const [roomInfos, setRoomInfos] = useState();
@@ -39,13 +44,23 @@ const RoomPage = () => {
 
     setInputError(false);
     try {
-      const response = await updateUsername({ token, newUsername });
+      await updateUsername({ token, newUsername });
       setUsername(newUsername);
       setMessage("Username updated successfully!");
       setNewUsername("");
     } catch (err) {
       console.log(err);
       setMessage(err.response.data.message);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout({ token, roomCode: roomId });
+      localStorage.setItem("token", null);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -69,6 +84,9 @@ const RoomPage = () => {
         <h2>
           Welcome <span style={{ color: "green" }}>{username}</span>
         </h2>
+        <button className="logout-button" onClick={handleLogout}>
+          logout
+        </button>
         <div>
           <input
             type="text"

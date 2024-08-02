@@ -1,5 +1,6 @@
 package com.kemal.icebreakerapp.controller;
 
+import com.kemal.icebreakerapp.model.dto.LogoutRequestDTO;
 import com.kemal.icebreakerapp.model.dto.RoomUserDTO;
 import com.kemal.icebreakerapp.model.dto.RoomUserInformationDTO;
 import com.kemal.icebreakerapp.service.RoomUserService;
@@ -29,5 +30,11 @@ public class RoomUserController {
     @GetMapping("/{roomCode}")
     public ResponseEntity<RoomUserInformationDTO> getRoomUserInformationByRoomCode(@PathVariable("roomCode") String roomCode) {
         return new ResponseEntity<>(roomUserService.getRoomInformation(roomCode), HttpStatus.OK);
+    }
+
+    @PutMapping("/logout")
+    public ResponseEntity<Void> logoutUser(@RequestBody LogoutRequestDTO request) {
+        roomUserService.logoutUser(request.getToken(), request.getRoomCode());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

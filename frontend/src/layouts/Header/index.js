@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const index = () => {
+const Header = () => {
   return (
     <Link to="/" className="header-link">
       <h1 className="header-title">IceBreaker Header</h1>
@@ -9,4 +9,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Header;
