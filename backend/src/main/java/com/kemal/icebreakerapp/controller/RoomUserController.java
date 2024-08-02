@@ -1,5 +1,6 @@
 package com.kemal.icebreakerapp.controller;
 
+import com.kemal.icebreakerapp.model.dto.RoomUserDTO;
 import com.kemal.icebreakerapp.model.dto.RoomUserInformationDTO;
 import com.kemal.icebreakerapp.service.RoomUserService;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,13 @@ public class RoomUserController {
 
     @Autowired
     private RoomUserService roomUserService;
+
+
+    @GetMapping("/token/{token}/roomCode/{roomCode}")
+    public ResponseEntity<RoomUserDTO> getRoomUserByTokenAndRoomCode(@PathVariable("token") String token,
+                                                                     @PathVariable("roomCode") String roomCode) {
+        return new ResponseEntity<>(roomUserService.getRoomUserByTokenAndRoomCode(token, roomCode), HttpStatus.OK);
+    }
 
     @GetMapping("/{roomCode}")
     public ResponseEntity<RoomUserInformationDTO> getRoomUserInformationByRoomCode(@PathVariable("roomCode") String roomCode) {
