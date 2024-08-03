@@ -28,29 +28,18 @@
 
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */ 
+  justify-content: space-between;
+  padding: 20px;
   height: 100vh;
-  position: relative;
 }
 
 .room-page {
+  flex: 1;
   text-align: center;
 }
 
-.update-username-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 300px;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
 .update-username-container h2 {
-  margin-top: 5px;
-  margin-bottom: 0px;
+  margin: 10px 0;
 }
 
 .update-username-container div {
@@ -60,9 +49,9 @@
 }
 
 .update-username-container input {
-  margin: 16px 0px;
+  margin: 16px 0;
   padding: 5px;
-  width: 95%;
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -77,6 +66,18 @@
 
 .update-username-container p {
   color: red;
+}
+
+.side-sub-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  align-self: flex-start;
+  /* Bu satır, elemanı içeriği kadar yüksek tutar */
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .create-room-page,
@@ -124,4 +125,8 @@ button {
 .username-textbox-empty {
   height: 48px;
   border: 2px solid red;
+}
+
+.online-users-buttons {
+  display: flex;
 }
