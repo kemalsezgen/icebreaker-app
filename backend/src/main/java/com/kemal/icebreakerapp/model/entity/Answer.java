@@ -10,12 +10,9 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userName;
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
+    private Long questionId;
+    private Long sessionId;
+    private String token;  // Token from RoomUser
+    private String roomCode;
     private AnswerType answer;
 }

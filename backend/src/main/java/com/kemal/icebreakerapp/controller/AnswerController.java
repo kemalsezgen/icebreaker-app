@@ -12,29 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/answers")
 @NoArgsConstructor
 @AllArgsConstructor
-@RequestMapping("/answers")
 public class AnswerController {
-
     @Autowired
     private AnswerService answerService;
 
-    @GetMapping
-    public ResponseEntity<List<AnswerDTO>> getAllAnswers() {
-        List<AnswerDTO> answers = answerService.getAllAnswers();
-        return new ResponseEntity<>(answers, HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<AnswerDTO> createAnswer(@RequestBody AnswerDTO answerDTO) {
-        AnswerDTO createdAnswer = answerService.createAnswer(answerDTO);
-        return new ResponseEntity<>(createdAnswer, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AnswerDTO> getAnswerById(@PathVariable Long id) throws Exception {
-        AnswerDTO answer = answerService.getAnswerById(id);
-        return new ResponseEntity<>(answer, HttpStatus.OK);
+    @PostMapping("/submit")
+    public ResponseEntity<Void> submitAnswer(@RequestBody List<AnswerDTO> request) {
+        answerService.submitAnswer(request);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

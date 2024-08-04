@@ -11,8 +11,9 @@ import lombok.*;
 @Builder
 public class AnswerDTO {
     private Long id;
-    private String userName;
     private Long questionId;
-    private Long roomId;
+    private Long sessionId;
+    private String token;  // Token from RoomUser
+    private String roomCode;
     private AnswerType answer;
 }
