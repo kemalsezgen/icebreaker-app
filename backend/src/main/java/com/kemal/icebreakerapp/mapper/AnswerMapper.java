@@ -2,9 +2,10 @@ package com.kemal.icebreakerapp.mapper;
 
 import com.kemal.icebreakerapp.model.dto.AnswerDTO;
 import com.kemal.icebreakerapp.model.entity.Answer;
-import com.kemal.icebreakerapp.model.entity.Question;
-import com.kemal.icebreakerapp.model.entity.Room;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AnswerMapper {
@@ -16,24 +17,39 @@ public class AnswerMapper {
 
         AnswerDTO answerDTO = new AnswerDTO();
         answerDTO.setId(answer.getId());
-        answerDTO.setUserName(answer.getUserName());
-        answerDTO.setQuestionId(answer.getQuestion().getId());
-        answerDTO.setRoomId(answer.getRoom().getId());
         answerDTO.setAnswer(answer.getAnswer());
+        answerDTO.setToken(answer.getToken());
+        answerDTO.setRoomCode(answer.getRoomCode());
+        answerDTO.setQuestionId(answer.getQuestionId());
+        answerDTO.setSessionId(answer.getSessionId());
         return answerDTO;
     }
 
-    public Answer toEntity(AnswerDTO answerDTO, Question question, Room room) {
+    public Answer toEntity(AnswerDTO answerDTO) {
         if (answerDTO == null) {
             return null;
         }
 
         Answer answer = new Answer();
         answer.setId(answerDTO.getId());
-        answer.setUserName(answerDTO.getUserName());
-        answer.setQuestion(question);
-        answer.setRoom(room);
         answer.setAnswer(answerDTO.getAnswer());
+        answer.setToken(answerDTO.getToken());
+        answer.setRoomCode(answerDTO.getRoomCode());
+        answer.setQuestionId(answerDTO.getQuestionId());
+        answer.setSessionId(answerDTO.getSessionId());
         return answer;
     }
+
+    public List<AnswerDTO> toDTOList(List<Answer> answers) {
+        return answers.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<Answer> toEntityList(List<AnswerDTO> answerDTOs) {
+        return answerDTOs.stream()
+                .map(this::toEntity)
+                .collect(Collectors.toList());
+    }
 }
+

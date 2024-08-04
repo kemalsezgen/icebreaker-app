@@ -15,6 +15,8 @@ public class QuestionMapper {
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setId(question.getId());
         questionDTO.setQuestionText(question.getQuestionText());
+        questionDTO.setOptionA(question.getOptionA());
+        questionDTO.setOptionB(question.getOptionB());
         return questionDTO;
     }
 
@@ -26,6 +28,8 @@ public class QuestionMapper {
         Question question = new Question();
         question.setId(questionDTO.getId());
         question.setQuestionText(questionDTO.getQuestionText());
+        question.setOptionA(questionDTO.getOptionA());
+        question.setOptionB(questionDTO.getOptionB());
         return question;
     }
 }
