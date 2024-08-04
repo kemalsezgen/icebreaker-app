@@ -55,7 +55,13 @@ public class RoomServiceImpl implements RoomService {
         JoinRoomRequest joinRoomRequest = new JoinRoomRequest();
         joinRoomRequest.setRoomCode(savedRoom.getCode());
         joinRoomRequest.setUsername(savedRoom.getCreatedBy());
-        return joinRoom(joinRoomRequest);
+
+        JoinRoomDTO joinRoomDTO = joinRoom(joinRoomRequest);
+
+        savedRoom.setCreatorToken(joinRoomDTO.getToken());
+        roomRepository.save(savedRoom);
+
+        return joinRoomDTO;
     }
 
     @Override

@@ -135,6 +135,24 @@ public class GameSessionServiceImpl implements GameSessionService {
         return gameSessionResultDTO;
     }
 
+    @Override
+    public GameInformationDTO getGameInformation(String roomCode) {
+        GameSession gameSession = gameSessionRepository.findByRoomCodeAndStatus(roomCode, GameSessionStatus.ACTIVE)
+                .orElseThrow(() -> new SessionExistException("Session not exist."));
+
+        List<GameSessionQuestion> sessionQuestions = gameSessionQuestionRepository.findBySessionId(gameSession.getId());
+
+        List<QuestionDTO> questionDTOList = sessionQuestions.stream()
+                .map(gameSessionQuestion -> questionService.getQuestionById(gameSessionQuestion.getQuestionId()))
+                .toList();
+
+        GameInformationDTO gameInformationDTO = new GameInformationDTO();
+        gameInformationDTO.setQuestionList(questionDTOList);
+        gameInformationDTO.setSessionId(gameSession.getId());
+
+        return gameInformationDTO;
+    }
+
 
     private Optional<GameSession> getSession(String roomCode) {
         return gameSessionRepository.findByRoomCodeAndStatus(roomCode, GameSessionStatus.ACTIVE);

@@ -52,6 +52,7 @@ public class RoomUserServiceImpl implements RoomUserService {
         Room room = roomRepository.findByCode(roomCode)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found with code: " + roomCode));
         roomUserInformationDTO.setRoomName(room.getName());
+        roomUserInformationDTO.setOwnerUserCode(room.getCreatorToken());
 
         return roomUserInformationDTO;
     }

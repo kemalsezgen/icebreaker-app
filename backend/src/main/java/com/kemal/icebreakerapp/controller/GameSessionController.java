@@ -33,4 +33,10 @@ public class GameSessionController {
         GameSessionResultDTO gameSessionResultDTO = gameSessionService.getResults(roomCode);
         return new ResponseEntity<>(gameSessionResultDTO, HttpStatus.OK);
     }
+
+    @GetMapping("/information/{roomCode}")
+    public ResponseEntity<GameInformationDTO> getGameInformation(@PathVariable("roomCode") String roomCode) {
+        GameInformationDTO gameInformationDTO = gameSessionService.getGameInformation(roomCode);
+        return new ResponseEntity<>(gameInformationDTO, HttpStatus.OK);
+    }
 }
