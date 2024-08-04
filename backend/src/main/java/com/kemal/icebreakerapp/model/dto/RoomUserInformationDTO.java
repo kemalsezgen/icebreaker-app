@@ -12,4 +12,5 @@ import java.util.List;
 public class RoomUserInformationDTO {
     private String roomName;
     private List<String> usernameList;
+    private String ownerUserCode;
 }

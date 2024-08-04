@@ -12,5 +12,6 @@ public class RoomDTO {
     private Long id;
     private String name;
     private String createdBy;
+    private String creatorToken;
     private String code;
 }

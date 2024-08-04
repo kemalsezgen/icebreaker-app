@@ -1,9 +1,7 @@
 package com.kemal.icebreakerapp.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Data
@@ -15,5 +13,6 @@ public class Room {
     private Long id;
     private String name;
     private String createdBy;
+    private String creatorToken;
     private String code;
 }

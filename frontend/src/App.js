@@ -18,6 +18,8 @@ function App() {
   const [joinedToRoom, setJoinedToRoom] = useState(false);
   const [username, setUsername] = useState();
   const [roomName, setRoomName] = useState();
+  const [isRoomOwner, setIsRoomOwner] = useState();
+  const [roomCode, setRoomCode] = useState();
 
   const contextData = {
     token,
@@ -30,6 +32,10 @@ function App() {
     setUsername,
     roomName,
     setRoomName,
+    isRoomOwner,
+    setIsRoomOwner,
+    roomCode,
+    setRoomCode,
   };
 
   return (

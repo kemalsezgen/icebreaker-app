@@ -4,6 +4,8 @@ const BASE_URL = "http://localhost:8080";
 const ROOMS_URL = BASE_URL + "/rooms";
 const ROOM_USER_URL = BASE_URL + "/room-user";
 const USER_URL = BASE_URL + "/user";
+const GAME_SESSION_URL = BASE_URL + "/sessions";
+const ANSWERS_URL = BASE_URL + "/answers";
 
 export async function getRoomById(id) {
   return await axios.get(ROOMS_URL + `/${id}`);
@@ -27,4 +29,20 @@ export async function updateUsername(userNameUpdateRequest) {
 
 export async function logout(logoutRequest) {
   return axios.put(ROOM_USER_URL + `/logout`, logoutRequest);
+}
+
+export async function startSession(startSessionRequest) {
+  return axios.post(GAME_SESSION_URL + "/start", startSessionRequest);
+}
+
+export async function getResults(roomCode) {
+  return axios.get(GAME_SESSION_URL + `/result/${roomCode}`);
+}
+
+export async function submitAnswers(saveAnswerRequest) {
+  return axios.post(ANSWERS_URL + "/submit", saveAnswerRequest);
+}
+
+export async function getGameInformation(roomCode) {
+  return axios.get(GAME_SESSION_URL + `/information/${roomCode}`);
 }
