@@ -6,7 +6,6 @@ import { Context } from "./context";
 import HomePage from "./pages/HomePage";
 import CreateRoomPage from "./pages/CreateRoomPage";
 import JoinRoomPage from "./pages/JoinRoomPage";
-//import RoomPage from "./pages/RoomPage";
 import EnterUsername from "./pages/EnterUsername";
 import RoomGuard from "./components/RoomGuard";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -20,6 +19,8 @@ function App() {
   const [roomName, setRoomName] = useState();
   const [isRoomOwner, setIsRoomOwner] = useState();
   const [roomCode, setRoomCode] = useState();
+  const [roomInfos, setRoomInfos] = useState();
+  const [message, setMessage] = useState("");
 
   const contextData = {
     token,
@@ -36,6 +37,10 @@ function App() {
     setIsRoomOwner,
     roomCode,
     setRoomCode,
+    roomInfos,
+    setRoomInfos,
+    message,
+    setMessage,
   };
 
   return (

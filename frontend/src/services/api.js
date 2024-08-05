@@ -1,11 +1,11 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:8080";
-const ROOMS_URL = BASE_URL + "/rooms";
-const ROOM_USER_URL = BASE_URL + "/room-user";
-const USER_URL = BASE_URL + "/user";
-const GAME_SESSION_URL = BASE_URL + "/sessions";
-const ANSWERS_URL = BASE_URL + "/answers";
+import {
+  ROOMS_URL,
+  ROOM_USER_URL,
+  USER_URL,
+  GAME_SESSION_URL,
+  ANSWERS_URL,
+} from "../constants/UrlConstants";
 
 export async function getRoomById(id) {
   return await axios.get(ROOMS_URL + `/${id}`);
