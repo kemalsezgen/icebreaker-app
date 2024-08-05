@@ -32,7 +32,7 @@ const RoomPage = () => {
     } catch (err) {
       console.log("error:", err);
     }
-  }, [roomId, setIsRoomOwner]);
+  }, [roomId, setIsRoomOwner, setRoomInfos]);
 
   useEffect(() => {
     fetchRoomInformations();
@@ -46,7 +46,7 @@ const RoomPage = () => {
 
       return () => clearTimeout(timer);
     }
-  }, [message]);
+  }, [message, setMessage]);
 
   return (
     <div className="container">

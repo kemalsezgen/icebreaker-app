@@ -31,7 +31,7 @@ const GameButtons = ({
       console.error(err);
       setMessage("Failed to get results");
     }
-  }, [roomId]);
+  }, [roomId, setIsGameStarted, setMessage]);
 
   const handleStartGame = async () => {
     try {
