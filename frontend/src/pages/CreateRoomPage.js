@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { createRoom } from "../services/api";
+import { CLIENT_URL } from "../constants/UrlConstants";
 
 const CreateRoomPage = () => {
   const [roomName, setRoomName] = useState();
@@ -27,8 +28,10 @@ const CreateRoomPage = () => {
       createRoom(createRoomDto)
         .then((response) => {
           const code = response.data.roomCode;
-          const inviteLink = `http://localhost:3000/room/${code}`;
-          alert(`Room created! Invite your friends using this link: ${inviteLink}`);
+          const inviteLink = `${CLIENT_URL} + /room/${code}`;
+          alert(
+            `Room created! Invite your friends using this link: ${inviteLink}`
+          );
           const { token } = response.data;
           localStorage.setItem("token", token);
           navigate(`/room/${code}`);
