@@ -7,7 +7,6 @@ import RoomPage from "../pages/RoomPage";
 const RoomGuard = ({ children }) => {
   const { roomId } = useParams();
   const {
-    token,
     setToken,
     joinedToRoom,
     setJoinedToRoom,
@@ -15,58 +14,53 @@ const RoomGuard = ({ children }) => {
     setRoomName,
   } = useContext(Context);
   const [loading, setLoading] = useState(true);
-  const [roomExists, setRoomExists] = useState(false);
+  const [roomExists, setRoomExists] = useState(null);
 
-  // Check if room exists
   useEffect(() => {
-    const fetchRoom = async () => {
+    const initialize = async () => {
       try {
-        await getRoomById(roomId);
-        setRoomExists(true);
-      } catch (err) {
-        console.log("error:", err);
-        setRoomExists(false);
-      } finally {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) setToken(storedToken);
+
+        await checkRoomExists();
+        if (storedToken) await attemptJoinRoom(storedToken);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Initialization error:", error);
         setLoading(false);
       }
     };
-    fetchRoom();
-  }, [roomId]);
 
-  // Read token from localStorage and set it in context
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, [setToken]);
+    const checkRoomExists = async () => {
+      try {
+        await getRoomById(roomId);
+        setRoomExists(true);
+      } catch {
+        setRoomExists(false);
+      }
+    };
 
-  // Join room if token exists and room exists
-  useEffect(() => {
-    const joinRoomIfNeeded = async () => {
-      if (roomExists && token) {
-        try {
-          const joinRoomRequest = { roomCode: roomId, token };
-          const res = await joinRoom(joinRoomRequest);
-          setUsername(res.data.username);
-          setRoomName(res.data.roomName);
-          setJoinedToRoom(true);
-        } catch (err) {
-          console.error("error:", err);
-          setJoinedToRoom(false);
-        }
-      } else if (roomExists && !token) {
+    const attemptJoinRoom = async (token) => {
+      try {
+        const joinRoomRequest = { roomCode: roomId, token };
+        const res = await joinRoom(joinRoomRequest);
+        setUsername(res.data.username);
+        setRoomName(res.data.roomName);
+        setJoinedToRoom(true);
+      } catch {
         setJoinedToRoom(false);
       }
     };
-    joinRoomIfNeeded();
-  }, [roomExists, token, roomId, setJoinedToRoom, setUsername, setRoomName]);
+
+    initialize();
+  }, [roomId, setToken, setUsername, setRoomName, setJoinedToRoom]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!roomExists) {
+  if (roomExists === false) {
     return <Navigate to="/not-found" replace />;
   }
 
@@ -74,9 +68,7 @@ const RoomGuard = ({ children }) => {
     return <RoomPage />;
   }
 
-  if (joinedToRoom !== null && joinedToRoom === false) {
-    return <>{children}</>;
-  }
+  return children;
 };
 
 export default RoomGuard;
