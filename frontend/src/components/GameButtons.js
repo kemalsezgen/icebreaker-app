@@ -14,6 +14,8 @@ const GameButtons = ({
   isGameStarted,
   setIsGameStarted,
   roomId,
+  isAnswersSubmitted,
+  setIsAnswersSubmitted
 }) => {
   const [results, setResults] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -41,6 +43,7 @@ const GameButtons = ({
       setQuestions(response.data.questionList);
       setSessionId(response.data.sessionId);
       setIsGameStarted(true);
+      setIsAnswersSubmitted(false);
       toast.success("Game started successfully!");
     } catch (err) {
       console.error(err);
@@ -86,7 +89,7 @@ const GameButtons = ({
             disabled={isGameStarted}
             onClick={handleStartGame}
           >
-            Start Game
+            Start New Game
           </button>
 
           <button
@@ -99,9 +102,11 @@ const GameButtons = ({
         </>
       )}
 
-      <button onClick={openModal}>Show Questions</button>
+      <button onClick={openModal} disabled={!isGameStarted || isAnswersSubmitted}>
+        Show Questions
+      </button>
 
-      <GameResults results={results} />
+      {!isGameStarted && <GameResults results={results} />}
 
       <QuestionsModal
         isGameStarted={isGameStarted}
@@ -110,6 +115,7 @@ const GameButtons = ({
         closeModal={closeModal}
         submitAnswers={saveAnswers}
         sessionId={sessionId}
+        setIsAnswersSubmitted={setIsAnswersSubmitted}
       />
     </div>
   );

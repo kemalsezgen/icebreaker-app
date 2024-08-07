@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     List<Answer> findBySessionId(Long sessionId);
+    List<Answer> findBySessionIdAndTokenAndRoomCode(Long sessionId, String token, String roomCode);
 }
