@@ -5,19 +5,13 @@ import { Context } from "../context";
 import { useCollapse } from "react-collapsed";
 import { IoReload } from "react-icons/io5";
 import { logout, updateUsername } from "../services/api";
+import { toast } from "sonner";
 
 const Sidebar = ({ roomId, fetchRoomInformations }) => {
   const navigate = useNavigate();
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-  const {
-    roomName,
-    username,
-    setUsername,
-    roomInfos,
-    message,
-    setMessage,
-    token,
-  } = useContext(Context);
+  const { roomName, username, setUsername, roomInfos, token } =
+    useContext(Context);
   const [newUsername, setNewUsername] = useState("");
   const [inputError, setInputError] = useState(false);
 
@@ -30,13 +24,13 @@ const Sidebar = ({ roomId, fetchRoomInformations }) => {
   const handleUpdateUsername = async () => {
     if (newUsername.trim() === "") {
       setInputError(true);
-      setMessage("Username cannot be empty.");
+      toast.warning("Username cannot be empty.");
       return;
     }
 
     if (newUsername === username) {
       setInputError(true);
-      setMessage("Please enter a different username.");
+      toast.warning("Please enter a different username.");
       return;
     }
 
@@ -44,11 +38,10 @@ const Sidebar = ({ roomId, fetchRoomInformations }) => {
     try {
       await updateUsername({ token, newUsername });
       setUsername(newUsername);
-      setMessage("Username updated successfully!");
+      toast.success("Username updated successfully!");
       setNewUsername("");
     } catch (err) {
-      console.log(err);
-      setMessage(err.response.data.message);
+      toast.error(err.response.data.message);
     }
   };
 
@@ -56,7 +49,6 @@ const Sidebar = ({ roomId, fetchRoomInformations }) => {
     try {
       await logout({ token, roomCode: roomId });
       localStorage.setItem("token", null);
-      setMessage("");
       setInputError("");
       navigate("/");
     } catch (err) {
@@ -88,7 +80,6 @@ const Sidebar = ({ roomId, fetchRoomInformations }) => {
           />
           <button onClick={handleUpdateUsername}>Update Username</button>
         </div>
-        {message && <p style={{ color: "black" }}>{message}</p>}
       </div>
 
       <div className="side-sub-container online-users-container">
