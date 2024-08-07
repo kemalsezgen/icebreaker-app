@@ -10,6 +10,7 @@ const QuestionsModal = ({
   closeModal,
   submitAnswers,
   sessionId,
+  setIsAnswersSubmitted,
 }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -45,6 +46,7 @@ const QuestionsModal = ({
 
     try {
       await submitAnswers(answerList);
+      setIsAnswersSubmitted(true);
       closeModal();
     } catch (err) {
       console.error(err);
@@ -75,7 +77,7 @@ const QuestionsModal = ({
         <div>
           <QuestionCard
             question={questions[currentQuestionIndex]}
-            selectedAnswer={answers[questions[currentQuestionIndex].id]}
+            selectedAnswer={answers[questions[currentQuestionIndex]?.id]}
             onSelectAnswer={handleSelectAnswer}
           />
           <div className="question-navigation">

@@ -13,6 +13,7 @@ const RoomPage = () => {
     useContext(Context);
 
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isAnswersSubmitted, setIsAnswersSubmitted] = useState(false);
 
   useEffect(() => {
     setRoomCode(roomId);
@@ -20,10 +21,12 @@ const RoomPage = () => {
 
   const fetchRoomInformations = useCallback(async () => {
     try {
-      const response = await getRoomUserInformation(roomId);
-      setRoomInfos(response.data);
       const userCode = localStorage.getItem("token");
+      const response = await getRoomUserInformation(roomId, userCode);
+      setRoomInfos(response.data);
       setIsRoomOwner(response.data.ownerUserCode === userCode);
+      setIsGameStarted(response.data.isGameStarted);
+      setIsAnswersSubmitted(response.data.isUserSubmittedAnswers);
     } catch (err) {
       console.log("error:", err);
     }
@@ -42,6 +45,8 @@ const RoomPage = () => {
           isGameStarted={isGameStarted}
           setIsGameStarted={setIsGameStarted}
           roomId={roomId}
+          isAnswersSubmitted={isAnswersSubmitted}
+          setIsAnswersSubmitted={setIsAnswersSubmitted}
         />
       </div>
 

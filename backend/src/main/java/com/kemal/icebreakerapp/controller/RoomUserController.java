@@ -27,9 +27,9 @@ public class RoomUserController {
         return new ResponseEntity<>(roomUserService.getRoomUserByTokenAndRoomCode(token, roomCode), HttpStatus.OK);
     }
 
-    @GetMapping("/{roomCode}")
-    public ResponseEntity<RoomUserInformationDTO> getRoomUserInformationByRoomCode(@PathVariable("roomCode") String roomCode) {
-        return new ResponseEntity<>(roomUserService.getRoomInformation(roomCode), HttpStatus.OK);
+    @GetMapping("/room/{roomCode}/token/{token}")
+    public ResponseEntity<RoomUserInformationDTO> getRoomUserInformationByRoomCode(@PathVariable("roomCode") String roomCode, @PathVariable("token") String token) {
+        return new ResponseEntity<>(roomUserService.getRoomInformation(roomCode, token), HttpStatus.OK);
     }
 
     @PutMapping("/logout")

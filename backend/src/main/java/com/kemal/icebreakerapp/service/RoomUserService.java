@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface RoomUserService {
 
-    RoomUserInformationDTO getRoomInformation(String roomCode);
+    RoomUserInformationDTO getRoomInformation(String roomCode, String userCode);
 
     RoomUserDTO getRoomUserByTokenAndRoomCode(String token, String roomCode);
 

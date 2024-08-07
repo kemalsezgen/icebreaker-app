@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "ROOM_USER")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomUser {
+public class RoomUser extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

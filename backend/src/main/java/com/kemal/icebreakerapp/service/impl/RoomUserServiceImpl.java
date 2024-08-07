@@ -4,13 +4,10 @@ import com.kemal.icebreakerapp.exception.ResourceNotFoundException;
 import com.kemal.icebreakerapp.mapper.RoomUserMapper;
 import com.kemal.icebreakerapp.model.dto.RoomUserDTO;
 import com.kemal.icebreakerapp.model.dto.RoomUserInformationDTO;
-import com.kemal.icebreakerapp.model.entity.Room;
-import com.kemal.icebreakerapp.model.entity.RoomUser;
-import com.kemal.icebreakerapp.model.entity.User;
+import com.kemal.icebreakerapp.model.entity.*;
+import com.kemal.icebreakerapp.model.enums.GameSessionStatus;
 import com.kemal.icebreakerapp.model.enums.RoomUserStatus;
-import com.kemal.icebreakerapp.repository.RoomRepository;
-import com.kemal.icebreakerapp.repository.RoomUserRepository;
-import com.kemal.icebreakerapp.repository.UserRepository;
+import com.kemal.icebreakerapp.repository.*;
 import com.kemal.icebreakerapp.service.RoomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +31,14 @@ public class RoomUserServiceImpl implements RoomUserService {
     @Autowired
     private RoomUserMapper roomUserMapper;
 
+    @Autowired
+    private GameSessionRepository gameSessionRepository;
+
+    @Autowired
+    AnswerRepository answerRepository;
+
     @Override
-    public RoomUserInformationDTO getRoomInformation(String roomCode) {
+    public RoomUserInformationDTO getRoomInformation(String roomCode, String token) {
         RoomUserInformationDTO roomUserInformationDTO = new RoomUserInformationDTO();
 
         List<String> usernameList = roomUserRepository.findByRoomCodeAndStatus(roomCode, RoomUserStatus.ACTIVE).stream()
@@ -53,6 +56,16 @@ public class RoomUserServiceImpl implements RoomUserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found with code: " + roomCode));
         roomUserInformationDTO.setRoomName(room.getName());
         roomUserInformationDTO.setOwnerUserCode(room.getCreatorToken());
+
+        Optional<GameSession> gameSessionOptional = gameSessionRepository.findByRoomCodeAndStatus(roomCode, GameSessionStatus.ACTIVE);
+
+        gameSessionOptional.ifPresentOrElse(gameSession -> {
+            roomUserInformationDTO.setIsGameStarted(Boolean.TRUE);
+            List<Answer> userAnswers = answerRepository.findBySessionIdAndTokenAndRoomCode(gameSession.getId(), token, roomCode);
+            roomUserInformationDTO.setIsUserSubmittedAnswers(!userAnswers.isEmpty());
+        }, () -> {
+            roomUserInformationDTO.setIsGameStarted(Boolean.FALSE);
+        });
 
         return roomUserInformationDTO;
     }

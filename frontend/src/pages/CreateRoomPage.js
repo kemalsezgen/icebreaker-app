@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { createRoom } from "../services/api";
 import { CLIENT_URL } from "../constants/UrlConstants";
+import { Toaster, toast } from "sonner";
 
 const CreateRoomPage = () => {
   const [roomName, setRoomName] = useState();
@@ -15,30 +16,43 @@ const CreateRoomPage = () => {
   }, [roomName]);
 
   const handleCreateRoom = async () => {
-    if (
-      roomName !== null &&
-      roomName !== undefined &&
-      username !== null &&
-      username !== undefined
-    ) {
+    if (roomName && username) {
       const createRoomDto = {
         name: roomName,
         createdBy: username,
       };
-      createRoom(createRoomDto)
-        .then((response) => {
-          const code = response.data.roomCode;
-          const inviteLink = `${CLIENT_URL} + /room/${code}`;
-          alert(
-            `Room created! Invite your friends using this link: ${inviteLink}`
-          );
-          const { token } = response.data;
-          localStorage.setItem("token", token);
+
+      try {
+        const response = await createRoom(createRoomDto);
+        const code = response.data.roomCode;
+        const inviteLink = `${CLIENT_URL}/room/${code}`;
+        const { token } = response.data;
+        localStorage.setItem("token", token);
+
+        const copyLink = () => {
+          navigator.clipboard.writeText(inviteLink).then(() => {
+            toast.success("Link copied to clipboard!");
+            navigate(`/room/${code}`);
+          });
+        };
+
+        toast.success(
+          <div>
+            <h3>Room created!</h3>
+            <h3>Invite your friends using this link:</h3>
+            <p>You can copy link any time you want from url</p>
+            <h1>{inviteLink}</h1>
+            <button onClick={copyLink}>Copy link and join room</button>
+          </div>
+        );
+
+        setTimeout(() => {
           navigate(`/room/${code}`);
-        })
-        .catch((error) => {
-          console.error("There was an error creating the room!", error);
-        });
+        }, 10000);
+      } catch (error) {
+        toast.error("There was an error creating the room!");
+        console.error("There was an error creating the room!", error);
+      }
     } else {
       setEmptyClicked(true);
     }
@@ -46,6 +60,7 @@ const CreateRoomPage = () => {
 
   return (
     <div className="create-room-page">
+      <Toaster richColors position="top-center" />
       <div className="create-room-page-sub">
         <h2>Create a Room</h2>
         <input

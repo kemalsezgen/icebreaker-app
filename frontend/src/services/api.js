@@ -19,8 +19,8 @@ export async function joinRoom(joinRoomRequest) {
   return axios.post(ROOMS_URL + `/join`, joinRoomRequest);
 }
 
-export async function getRoomUserInformation(roomCode) {
-  return axios.get(ROOM_USER_URL + `/${roomCode}`);
+export async function getRoomUserInformation(roomCode, token) {
+  return axios.get(ROOM_USER_URL + `/room/${roomCode}/token/${token}`);
 }
 
 export async function updateUsername(userNameUpdateRequest) {
