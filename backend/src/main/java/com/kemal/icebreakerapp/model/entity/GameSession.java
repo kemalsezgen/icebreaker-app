@@ -7,10 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "GAME_SESSION")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameSession {
+public class GameSession extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
