@@ -1,5 +1,4 @@
-import React, { useCallback, useState, useContext } from "react";
-import { Context } from "../context";
+import React, { useCallback, useState } from "react";
 import {
   getResults,
   startSession,
@@ -8,6 +7,7 @@ import {
 } from "../services/api";
 import QuestionsModal from "../components/QuestionsModal";
 import GameResults from "./GameResults";
+import { toast } from "sonner";
 
 const GameButtons = ({
   isRoomOwner,
@@ -15,7 +15,6 @@ const GameButtons = ({
   setIsGameStarted,
   roomId,
 }) => {
-  const { setMessage } = useContext(Context);
   const [results, setResults] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [isQuestionsModalOpen, setIsQuestionsModalOpen] = useState(false);
@@ -28,10 +27,9 @@ const GameButtons = ({
       setResults(response.data.questionDetailResults);
       setIsGameStarted(false);
     } catch (err) {
-      console.error(err);
-      setMessage("Failed to get results");
+      toast.error("Username cannot be empty.");
     }
-  }, [roomId, setIsGameStarted, setMessage]);
+  }, [roomId, setIsGameStarted]);
 
   const handleStartGame = async () => {
     try {
@@ -43,10 +41,10 @@ const GameButtons = ({
       setQuestions(response.data.questionList);
       setSessionId(response.data.sessionId);
       setIsGameStarted(true);
-      setMessage("Game started successfully!");
+      toast.success("Game started successfully!");
     } catch (err) {
       console.error(err);
-      setMessage("Failed to start the game.");
+      toast.error("Failed to start the game.");
     }
   };
 
@@ -61,8 +59,7 @@ const GameButtons = ({
       }
       setIsQuestionsModalOpen(true);
     } catch (err) {
-      console.error("Failed to get questions", err);
-      setMessage("Failed to load questions.");
+      toast.error("Failed to load questions.");
     }
   };
 
@@ -73,11 +70,10 @@ const GameButtons = ({
   const saveAnswers = async (answers) => {
     try {
       await submitAnswers(answers);
-      setMessage("Answers saved successfully!");
+      toast.success("Answers saved successfully!");
       setIsQuestionsModalOpen(false);
     } catch (err) {
-      console.error(err);
-      setMessage("Failed to save answers");
+      toast.error("Failed to save answers");
     }
   };
 

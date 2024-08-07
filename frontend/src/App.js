@@ -20,7 +20,6 @@ function App() {
   const [isRoomOwner, setIsRoomOwner] = useState();
   const [roomCode, setRoomCode] = useState();
   const [roomInfos, setRoomInfos] = useState();
-  const [message, setMessage] = useState("");
 
   const contextData = {
     token,
@@ -39,8 +38,6 @@ function App() {
     setRoomCode,
     roomInfos,
     setRoomInfos,
-    message,
-    setMessage,
   };
 
   return (

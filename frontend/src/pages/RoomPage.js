@@ -5,17 +5,12 @@ import { Context } from "../context";
 import { getRoomUserInformation } from "../services/api";
 import GameButtons from "../components/GameButtons";
 import Sidebar from "../components/Sidebar";
+import { Toaster } from "sonner";
 
 const RoomPage = () => {
   const { roomId } = useParams();
-  const {
-    isRoomOwner,
-    setIsRoomOwner,
-    setRoomCode,
-    setRoomInfos,
-    message,
-    setMessage,
-  } = useContext(Context);
+  const { isRoomOwner, setIsRoomOwner, setRoomCode, setRoomInfos } =
+    useContext(Context);
 
   const [isGameStarted, setIsGameStarted] = useState(false);
 
@@ -38,19 +33,10 @@ const RoomPage = () => {
     fetchRoomInformations();
   }, [roomId, fetchRoomInformations]);
 
-  useEffect(() => {
-    if (message !== "") {
-      const timer = setTimeout(() => {
-        setMessage("");
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [message, setMessage]);
-
   return (
     <div className="container">
       <div className="room-page">
+        <Toaster richColors position="top-right" />
         <GameButtons
           isRoomOwner={isRoomOwner}
           isGameStarted={isGameStarted}
