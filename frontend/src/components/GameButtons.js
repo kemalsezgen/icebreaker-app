@@ -15,7 +15,7 @@ const GameButtons = ({
   setIsGameStarted,
   roomId,
   isAnswersSubmitted,
-  setIsAnswersSubmitted
+  setIsAnswersSubmitted,
 }) => {
   const [results, setResults] = useState([]);
   const [questions, setQuestions] = useState([]);

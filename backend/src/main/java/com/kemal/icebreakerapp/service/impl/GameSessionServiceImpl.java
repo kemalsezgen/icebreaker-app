@@ -2,6 +2,7 @@ package com.kemal.icebreakerapp.service.impl;
 
 import com.kemal.icebreakerapp.exception.SessionExistException;
 import com.kemal.icebreakerapp.mapper.AnswerMapper;
+import com.kemal.icebreakerapp.mapper.QuestionMapper;
 import com.kemal.icebreakerapp.model.dto.*;
 import com.kemal.icebreakerapp.model.entity.*;
 import com.kemal.icebreakerapp.model.enums.AnswerType;
@@ -41,6 +42,12 @@ public class GameSessionServiceImpl implements GameSessionService {
 
     @Autowired
     private RoomUserRepository roomUserRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @Autowired
+    private QuestionMapper questionMapper;
 
     @Override
     public CreateSessionResponse createSession(String roomCode, Integer questionCount) {
@@ -101,16 +108,17 @@ public class GameSessionServiceImpl implements GameSessionService {
         // Initialize question details
         sessionQuestions.forEach(sessionQuestion -> {
             QuestionDetailResultsDTO questionDetailResultsDTO = new QuestionDetailResultsDTO();
-            questionDetailResultsDTO.setQuestionId(sessionQuestion.getQuestionId());
             questionDetailResultsDTO.setOptionAChoosers(new ArrayList<>());
             questionDetailResultsDTO.setOptionBChoosers(new ArrayList<>());
+            Optional<Question> questionOptional = questionRepository.findById(sessionQuestion.getQuestionId());
+            questionOptional.ifPresent(question -> questionDetailResultsDTO.setQuestion(questionMapper.toDTO(question)));
             questionDetailResultsDTOList.add(questionDetailResultsDTO);
         });
 
         // Populate question details with answers
         answerList.forEach(answer -> {
             questionDetailResultsDTOList.stream()
-                    .filter(questionDetailResultsDTO -> answer.getQuestionId().equals(questionDetailResultsDTO.getQuestionId()))
+                    .filter(questionDetailResultsDTO -> answer.getQuestionId().equals(questionDetailResultsDTO.getQuestion().getId()))
                     .findFirst()
                     .ifPresent(questionDetailResultsDTO -> {
                         RoomUser roomUser = roomUserRepository.findByTokenAndRoomCode(answer.getToken(), answer.getRoomCode());
