@@ -11,16 +11,27 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <h1>Welcome to IceBreaker Game</h1>
-      <div className="buttons">
-        <Link to="/create-room">
-          <button>Create Room</button>
-        </Link>
-        <Link to="/join-room">
-          <button>Join Room</button>
-        </Link>
+      <div className="content">
+        <h2>What is breakingICES?</h2>
+        <p>
+          Welcome to IceBreaker Game! This fun and interactive app is perfect
+          for remote teams looking to connect and strengthen their bonds. Create
+          or join rooms where you and your colleagues can answer entertaining
+          and thought-provoking questions. Start a session, share your answers,
+          and get to know each other better in a relaxed and enjoyable setting.
+          It's the ideal way to break the ice, build team spirit, and have a
+          good time!
+        </p>
+        <div className="buttons">
+          <Link to="/create-room">
+            <button className="btn">create room</button>
+          </Link>
+          <span className="or">or</span>
+          <Link to="/join-room">
+            <button className="btn">join to room</button>
+          </Link>
+        </div>
       </div>
-      <h1>token: {token}</h1>
     </div>
   );
 };

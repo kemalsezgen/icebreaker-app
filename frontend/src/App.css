@@ -3,7 +3,132 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: #a6a9b9;
+  /* Yeşil renk */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.content {
+  text-align: center;
+}
+
+.home-page h2 {
+  margin-top: 80px;
+  font-size: 64px;
+  color: #1a1f3c;
+}
+
+.home-page p {
+  color: #1a1f3c;
+  width: 60%;
+  margin: 20px auto;
+  font-size: 32px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.buttons .btn {
+  background-color: white;
+  border: 2px solid #1a1f3c;
+  color: #1a1f3c;
+  padding: 30px 60px;
+  margin: 0 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 32px;
+  cursor: pointer;
+
+}
+
+.btn:hover {
+  background-color: #1a1f3c;
+  color: white;
+}
+
+.buttons .or {
+  color: #1a1f3c;
+  font-size: 28px;
+  margin: 0 20px;
+}
+
+@media (max-width: 1200px) {
+  .home-page h2 {
+    margin-top: 50px;
+    font-size: 48px;
+  }
+
+  .home-page p {
+    font-size: 24px;
+  }
+
+  .buttons .btn {
+    padding: 12px 24px;
+    font-size: 24px;
+  }
+
+  .buttons .or {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page h2 {
+    margin-top: 30px;
+    font-size: 36px;
+  }
+
+  .home-page p {
+    font-size: 18px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons .btn {
+    padding: 10px 20px;
+    margin: 10px 0;
+  }
+
+  .buttons .or {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page h2 {
+    margin-top: 16px;
+    font-size: 28px;
+  }
+
+  .home-page p {
+    font-size: 16px;
+  }
+
+  .buttons .btn {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+}
+
 .header-link {
+  margin-left: 36px;
   text-decoration: none;
   color: inherit;
 }
@@ -21,7 +146,9 @@
 }
 
 .header {
-  background-color: #282c34;
+  display: flex;
+  padding: 50px;
+  background-color: #1a1f3c;
   padding: 20px;
   color: white;
 }
@@ -198,8 +325,24 @@ button {
 }
 
 .result-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
   background-color: #f9f9f9;
+  align-items: center;
+}
+
+.chart {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.chart canvas {
+  display: block;
+  margin: 0 auto;
 }
