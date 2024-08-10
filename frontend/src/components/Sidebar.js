@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { Context } from "../context";
 import { useCollapse } from "react-collapsed";
 import { IoReload } from "react-icons/io5";
-import { logout, updateUsername } from "../services/api";
+import { updateUsername } from "../services/api";
 import { toast } from "sonner";
 
-const Sidebar = ({ roomId, fetchRoomInformations }) => {
-  const navigate = useNavigate();
+const Sidebar = ({ fetchRoomInformations }) => {
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-  const { roomName, username, setUsername, roomInfos, token } =
+  const { username, setUsername, roomInfos, token, inputError, setInputError } =
     useContext(Context);
   const [newUsername, setNewUsername] = useState("");
-  const [inputError, setInputError] = useState(false);
 
   useEffect(() => {
     if (isExpanded) {
@@ -45,31 +42,13 @@ const Sidebar = ({ roomId, fetchRoomInformations }) => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout({ token, roomCode: roomId });
-      localStorage.setItem("token", null);
-      setInputError("");
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   const handleReload = () => {
     fetchRoomInformations();
   };
 
   return (
     <div className="side-containers">
-      <h1>Room {roomName}</h1>
       <div className="side-sub-container update-username-container">
-        <h2>
-          Welcome <span style={{ color: "green" }}>{username}</span>
-        </h2>
-        <button className="logout-button" onClick={handleLogout}>
-          logout
-        </button>
         <div>
           <input
             type="text"

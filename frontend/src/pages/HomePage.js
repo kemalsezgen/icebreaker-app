@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import { Context } from "../context";
 
 const HomePage = () => {
-  const { token, setToken } = useContext(Context);
+  const { token, setToken, setRoomName, setJoinedToRoom } = useContext(Context);
 
   useEffect(() => {
     setToken(localStorage.getItem("token"));
   }, [token, setToken]);
+
+  useEffect(() => {
+    setRoomName(null);
+    setJoinedToRoom(false);
+  }, [setRoomName, setJoinedToRoom]);
 
   return (
     <div className="home-page">

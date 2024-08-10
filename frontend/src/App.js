@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
 import { Context } from "./context";
 
@@ -20,6 +25,8 @@ function App() {
   const [isRoomOwner, setIsRoomOwner] = useState();
   const [roomCode, setRoomCode] = useState();
   const [roomInfos, setRoomInfos] = useState();
+  const [inputError, setInputError] = useState(false);
+  const location = useLocation();
 
   const contextData = {
     token,
@@ -38,35 +45,52 @@ function App() {
     setRoomCode,
     roomInfos,
     setRoomInfos,
+    inputError,
+    setInputError,
   };
+
+  useEffect(() => {
+    if (
+      location.pathname === "/" ||
+      location.pathname.includes("create-room") ||
+      location.pathname.includes("join-room")
+    ) {
+      setRoomName(null);
+      setJoinedToRoom(false);
+    }
+  }, [location, setRoomName, setJoinedToRoom]);
 
   return (
     <Context.Provider value={contextData}>
-      <Router>
-        <div className="App">
-          <header className="header">
-            <Header />
-          </header>
-          <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/create-room" element={<CreateRoomPage />} />
-              <Route path="/join-room" element={<JoinRoomPage />} />
-              <Route
-                path="/room/:roomId"
-                element={
-                  <RoomGuard>
-                    <EnterUsername />
-                  </RoomGuard>
-                }
-              />
-              <Route path="/not-found" element={<NotFoundPage />} />
-            </Routes>
-          </main>
-        </div>
-      </Router>
+      <div className="App">
+        <Header roomId={roomCode} />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/create-room" element={<CreateRoomPage />} />
+            <Route path="/join-room" element={<JoinRoomPage />} />
+            <Route
+              path="/room/:roomId"
+              element={
+                <RoomGuard>
+                  <EnterUsername />
+                </RoomGuard>
+              }
+            />
+            <Route path="/not-found" element={<NotFoundPage />} />
+          </Routes>
+        </main>
+      </div>
     </Context.Provider>
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default AppWrapper;

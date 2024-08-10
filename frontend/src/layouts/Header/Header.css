@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #1a1f3c;
+  color: white;
+  padding: 0 20px;
+  height: 80px;
+  width: 100%;
+  position: relative;
+}
+
+.header-link {
+  margin-left: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.header-link:link,
+.header-link:visited,
+.header-link:hover,
+.header-link:active {
+  text-decoration: none;
+  color: white;
+}
+
+.header-title {
+  color: white;
+}
+
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.header-right h1 {
+  margin-right: 10px;
+}
+
+.header-right button {
+  height: 40px;
+  margin-left: 15px;
+  padding: 0 20px;
+  border-radius: 5px;
+}
