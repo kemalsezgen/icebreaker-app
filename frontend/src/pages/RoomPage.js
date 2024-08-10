@@ -50,7 +50,7 @@ const RoomPage = () => {
         />
       </div>
 
-      <Sidebar roomId={roomId} fetchRoomInformations={fetchRoomInformations} />
+      <Sidebar fetchRoomInformations={fetchRoomInformations} />
     </div>
   );
 };
