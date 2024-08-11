@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../context";
+import { Context } from "../../context";
+import "./HomePage.css";
 
 const HomePage = () => {
   const { token, setToken, setRoomName, setJoinedToRoom } = useContext(Context);

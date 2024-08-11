@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-
-import { Context } from "../context";
-import { getRoomUserInformation } from "../services/api";
-import GameButtons from "../components/GameButtons";
-import Sidebar from "../components/Sidebar";
+import "./RoomPage.css";
+import { Context } from "../../context";
+import { getRoomUserInformation } from "../../services/api";
+import GameButtons from "../../components/GameButtons/GameButtons";
+import Sidebar from "../../components/Sidebar";
 import { Toaster } from "sonner";
 
 const RoomPage = () => {

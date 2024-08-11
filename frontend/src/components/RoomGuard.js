@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { Context } from "../context";
 import { getRoomById, joinRoom } from "../services/api";
-import RoomPage from "../pages/RoomPage";
+import RoomPage from "../pages/RoomPage/RoomPage";
 
 const RoomGuard = ({ children }) => {
   const { roomId } = useParams();

@@ -8,7 +8,7 @@ import {
 import "./App.css";
 import { Context } from "./context";
 
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import CreateRoomPage from "./pages/CreateRoomPage";
 import JoinRoomPage from "./pages/JoinRoomPage";
 import EnterUsername from "./pages/EnterUsername";

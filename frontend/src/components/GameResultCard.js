@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Chart } from "primereact/chart";
+import { Pie } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
@@ -17,7 +17,7 @@ const GameResultCard = ({ result, index }) => {
     ],
   });
 
-  const [lightOptions] = useState({
+  const [chartOptions] = useState({
     plugins: {
       legend: {
         labels: {
@@ -41,8 +41,8 @@ const GameResultCard = ({ result, index }) => {
           dataArr.forEach((data) => {
             sum += data;
           });
-          const percentage = ((value * 100) / sum).toFixed(2) + "%";
-          return percentage;
+          const percentage = ((value * 100) / sum).toFixed(2);
+          return percentage > 0 ? `${percentage}%` : null;
         },
         color: "#fff",
         font: {
@@ -55,15 +55,18 @@ const GameResultCard = ({ result, index }) => {
 
   return (
     <div key={index} className="result-item">
-      <h3>
-        Question {index + 1} - {result.question.questionText}
-      </h3>
+      <h2>Question {index + 1}</h2>
+      <h3>{result.question.questionText}</h3>
       <div className="chart">
-        <Chart
-          type="pie"
+        <Pie
           data={chartData}
-          options={lightOptions}
-          style={{ width: "300px", height: "300px" }} // Sabit boyut verdik
+          options={chartOptions}
+          style={{
+            width: "80%",
+            maxWidth: "300px",
+            height: "300px",
+            margin: "0 auto",
+          }}
         />
       </div>
     </div>

@@ -4,10 +4,12 @@ import {
   startSession,
   getGameInformation,
   submitAnswers,
-} from "../services/api";
-import QuestionsModal from "../components/QuestionsModal";
-import GameResults from "./GameResults";
+} from "../../services/api";
+import "./GameButtons.css";
+import QuestionsModal from "../QuestionsModal";
+import GameResults from "../GameResults";
 import { toast } from "sonner";
+import GameSettingsModal from "../GameSettingsModal";
 
 const GameButtons = ({
   isRoomOwner,
@@ -20,30 +22,30 @@ const GameButtons = ({
   const [results, setResults] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [isQuestionsModalOpen, setIsQuestionsModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [sessionId, setSessionId] = useState();
 
   const showResults = useCallback(async () => {
     try {
       const response = await getResults(roomId);
-      console.log("response:", response);
       setResults(response.data.questionDetailResults);
-      setIsGameStarted(false);
     } catch (err) {
-      toast.error("Username cannot be empty.");
+      toast.error("Failed to fetch results.");
     }
-  }, [roomId, setIsGameStarted]);
+  }, [roomId]);
 
-  const handleStartGame = async () => {
+  const handleStartGame = async (questionCount) => {
     try {
       const response = await startSession({
         roomCode: roomId,
-        questionCount: 3,
+        questionCount,
       });
 
       setQuestions(response.data.questionList);
       setSessionId(response.data.sessionId);
       setIsGameStarted(true);
       setIsAnswersSubmitted(false);
+      setResults([]);
       toast.success("Game started successfully!");
     } catch (err) {
       console.error(err);
@@ -62,7 +64,7 @@ const GameButtons = ({
       }
       setIsQuestionsModalOpen(true);
     } catch (err) {
-      toast.error("Failed to load questions.");
+      toast.error("Game is not active.");
     }
   };
 
@@ -75,6 +77,7 @@ const GameButtons = ({
       await submitAnswers(answers);
       toast.success("Answers saved successfully!");
       setIsQuestionsModalOpen(false);
+      setIsAnswersSubmitted(true);
     } catch (err) {
       toast.error("Failed to save answers");
     }
@@ -86,27 +89,26 @@ const GameButtons = ({
         <>
           <button
             className="start-game-button"
-            disabled={isGameStarted}
-            onClick={handleStartGame}
+            onClick={() => setIsSettingsModalOpen(true)}
           >
             Start New Game
-          </button>
-
-          <button
-            className="start-game-button"
-            disabled={!isGameStarted}
-            onClick={showResults}
-          >
-            Show Results
           </button>
         </>
       )}
 
-      <button onClick={openModal} disabled={!isGameStarted || isAnswersSubmitted}>
+      <button
+        className="start-game-button"
+        disabled={!isGameStarted}
+        onClick={showResults}
+      >
+        Show Results
+      </button>
+
+      <button onClick={openModal} disabled={isAnswersSubmitted}>
         Show Questions
       </button>
 
-      {!isGameStarted && <GameResults results={results} />}
+      <GameResults key={JSON.stringify(results)} results={results} />
 
       <QuestionsModal
         isGameStarted={isGameStarted}
@@ -116,6 +118,12 @@ const GameButtons = ({
         submitAnswers={saveAnswers}
         sessionId={sessionId}
         setIsAnswersSubmitted={setIsAnswersSubmitted}
+      />
+
+      <GameSettingsModal
+        isOpen={isSettingsModalOpen}
+        onRequestClose={() => setIsSettingsModalOpen(false)}
+        handleStartGame={handleStartGame}
       />
     </div>
   );
