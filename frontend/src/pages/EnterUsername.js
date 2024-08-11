@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getRoomById, joinRoom } from "../services/api";
-import RoomPage from "./RoomPage";
+import RoomPage from "./RoomPage/RoomPage";
 import { Context } from "../context";
 
 const EnterUsername = () => {
