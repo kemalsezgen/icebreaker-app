@@ -54,7 +54,8 @@ public class GameSessionServiceImpl implements GameSessionService {
         Optional<GameSession> existGameSession = gameSessionRepository.findByRoomCodeAndStatus(roomCode, GameSessionStatus.ACTIVE);
 
         if (existGameSession.isPresent()) {
-            throw new SessionExistException("Session exist");
+            existGameSession.get().setStatus(GameSessionStatus.PASSIVE);
+            gameSessionRepository.save(existGameSession.get());
         }
 
         GameSession gameSession = new GameSession();
@@ -135,10 +136,6 @@ public class GameSessionServiceImpl implements GameSessionService {
                         }
                     });
         });
-
-        // End the session
-        gameSession.setStatus(GameSessionStatus.PASSIVE);
-        gameSessionRepository.save(gameSession);
 
         return gameSessionResultDTO;
     }
