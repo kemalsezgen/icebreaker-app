@@ -6,10 +6,10 @@ import {
   submitAnswers,
 } from "../../services/api";
 import "./GameButtons.css";
-import QuestionsModal from "../QuestionsModal";
+import QuestionsModal from "../Modals/QuestionsModal";
 import GameResults from "../GameResults";
 import { toast } from "sonner";
-import GameSettingsModal from "../GameSettingsModal";
+import GameSettingsModal from "../Modals/GameSettingsModal/GameSettingsModal";
 
 const GameButtons = ({
   isRoomOwner,
@@ -85,30 +85,28 @@ const GameButtons = ({
 
   return (
     <div className="game-controls">
-      {isRoomOwner && (
-        <>
-          <button
-            className="start-game-button"
-            onClick={() => setIsSettingsModalOpen(true)}
-          >
-            Start New Game
-          </button>
-        </>
+      <div className="game-controls-buttons">
+        {isRoomOwner && (
+          <>
+            <button onClick={() => setIsSettingsModalOpen(true)}>
+              Start New Game
+            </button>
+          </>
+        )}
+
+        <button disabled={!isGameStarted} onClick={showResults}>
+          Show Results
+        </button>
+
+        <button onClick={openModal} disabled={isAnswersSubmitted}>
+          Show Questions
+        </button>
+      </div>
+      {results.length > 0 ? (
+        <GameResults key={JSON.stringify(results)} results={results} />
+      ) : (
+        ""
       )}
-
-      <button
-        className="start-game-button"
-        disabled={!isGameStarted}
-        onClick={showResults}
-      >
-        Show Results
-      </button>
-
-      <button onClick={openModal} disabled={isAnswersSubmitted}>
-        Show Questions
-      </button>
-
-      <GameResults key={JSON.stringify(results)} results={results} />
 
       <QuestionsModal
         isGameStarted={isGameStarted}

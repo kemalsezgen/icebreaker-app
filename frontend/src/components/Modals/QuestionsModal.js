@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../context";
+import { Context } from "../../context";
 import Modal from "react-modal";
-import QuestionCard from "./QuestionCard";
+import QuestionCard from "../QuestionCard";
 
 const QuestionsModal = ({
   isQuestionsModalOpen,
