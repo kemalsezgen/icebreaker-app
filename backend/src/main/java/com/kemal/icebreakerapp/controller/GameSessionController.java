@@ -18,7 +18,7 @@ public class GameSessionController {
 
     @PostMapping("/start")
     public ResponseEntity<CreateSessionResponse> startSession(@RequestBody StartSessionRequest request) {
-        CreateSessionResponse gameSessionDTO = gameSessionService.createSession(request.getRoomCode(), request.getQuestionCount());
+        CreateSessionResponse gameSessionDTO = gameSessionService.createSession(request);
         return ResponseEntity.ok(gameSessionDTO);
     }
 

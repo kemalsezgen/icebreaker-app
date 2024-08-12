@@ -2,20 +2,13 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import "./GameSettingsModal.css";
 import Select from "react-select";
+import { questionTypes } from "../../../constants/QuestionTypes";
+import { toast } from "sonner";
 
 const GameSettingsModal = ({ isOpen, onRequestClose, handleStartGame }) => {
   const [questionCount, setQuestionCount] = useState(3);
-  const [categoryList] = useState([
-    {
-      value: "movies",
-      label: "Movies",
-    },
-    {
-      value: "general",
-      label: "General",
-    },
-  ]);
-  const [selectedCategory, setSelectedCategory] = useState();
+  const [categoryList] = useState(questionTypes);
+  const [selectedCategory, setSelectedCategory] = useState(questionTypes[0].value);
 
   useEffect(() => {
     console.log("selectedCategory:", selectedCategory);
@@ -26,20 +19,31 @@ const GameSettingsModal = ({ isOpen, onRequestClose, handleStartGame }) => {
   };
 
   const handleSubmit = () => {
-    handleStartGame(questionCount);
+    if (selectedCategory === "") {
+      toast.warning("Select a category!");
+      return;
+    }
+    handleStartGame(questionCount, selectedCategory);
     onRequestClose();
+  };
+
+  const handleCategoryChange = (category) => {
+    if (category) {
+      setSelectedCategory(category.value);
+    } else {
+      setSelectedCategory("");
+    }
   };
 
   const modalStyles = {
     content: {
-      width: "30%",
-      height: "40%",
+      width: "40%",
+      height: "55%",
       marginTop: "40px",
       marginLeft: "auto",
       marginRight: "auto",
       display: "flex",
       flexDirection: "column",
-      alignItems: "center",
       backgroundColor: "#1a1f3c",
       justifyContent: "center",
       borderRadius: "20px",
@@ -56,18 +60,6 @@ const GameSettingsModal = ({ isOpen, onRequestClose, handleStartGame }) => {
     >
       <div className="game-settings-modal">
         <h2>Game Settings</h2>
-        <div className="question-count">
-          <p>Number of Questions: {questionCount}</p>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={questionCount}
-            onChange={handleSliderChange}
-            style={{ width: "100%" }}
-          />
-        </div>
-
         <div className="category">
           <p>Select category:</p>
           <div className="select">
@@ -84,12 +76,23 @@ const GameSettingsModal = ({ isOpen, onRequestClose, handleStartGame }) => {
                   color: "black",
                 }),
               }}
-              onChange={(category) => setSelectedCategory(category.value)}
+              onChange={(category) => handleCategoryChange(category)}
             />
           </div>
         </div>
+        <div className="question-count">
+          <p>Number of Questions: {questionCount}</p>
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value={questionCount}
+            onChange={handleSliderChange}
+            style={{ width: "100%" }}
+          />
+        </div>
 
-        <button onClick={handleSubmit}>OK</button>
+        <button onClick={handleSubmit}>START GAME</button>
       </div>
     </Modal>
   );

@@ -34,11 +34,12 @@ const GameButtons = ({
     }
   }, [roomId]);
 
-  const handleStartGame = async (questionCount) => {
+  const handleStartGame = async (questionCount, selectedCategory) => {
     try {
       const response = await startSession({
         roomCode: roomId,
         questionCount,
+        questionType: selectedCategory
       });
 
       setQuestions(response.data.questionList);

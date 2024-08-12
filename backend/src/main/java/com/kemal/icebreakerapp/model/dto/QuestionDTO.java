@@ -3,6 +3,7 @@ package com.kemal.icebreakerapp.model.dto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import com.kemal.icebreakerapp.model.enums.QuestionType;
 
 @Data
 @Getter
@@ -12,5 +13,6 @@ public class QuestionDTO {
     private String questionText;
     private String optionA;
     private String optionB;
+    private QuestionType type;
 }
 
