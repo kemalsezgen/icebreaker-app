@@ -4,7 +4,7 @@ import "./RoomPage.css";
 import { Context } from "../../context";
 import { getRoomUserInformation } from "../../services/api";
 import GameButtons from "../../components/GameButtons/GameButtons";
-import Sidebar from "../../components/Sidebar";
+import UsersSidebar from "../../components/UsersSidebar/UsersSidebar";
 import { Toaster } from "sonner";
 
 const RoomPage = () => {
@@ -39,7 +39,7 @@ const RoomPage = () => {
   return (
     <div className="container">
       <div className="room-page">
-        <Toaster richColors position="top-right" />
+        <Toaster richColors position="top-center" />
         <GameButtons
           isRoomOwner={isRoomOwner}
           isGameStarted={isGameStarted}
@@ -50,7 +50,7 @@ const RoomPage = () => {
         />
       </div>
 
-      <Sidebar fetchRoomInformations={fetchRoomInformations} />
+      {/* <UsersSidebar fetchRoomInformations={fetchRoomInformations} /> */}
     </div>
   );
 };

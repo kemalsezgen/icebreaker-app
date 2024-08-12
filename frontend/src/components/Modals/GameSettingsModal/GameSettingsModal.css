@@ -1,0 +1,36 @@
+.game-settings-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: white;
+}
+
+.game-settings-modal h2 {
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 32px;
+}
+
+.game-settings-modal p {
+  margin: 10px 0px;
+  font-size: 24px;
+}
+
+.game-settings-modal button {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.category {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.category .select {
+  color: black;
+}
+
+.question-count {
+  margin-bottom: 30px;
+}

@@ -3,6 +3,7 @@ package com.kemal.icebreakerapp.service.impl;
 import com.kemal.icebreakerapp.model.dto.QuestionDTO;
 import com.kemal.icebreakerapp.mapper.QuestionMapper;
 import com.kemal.icebreakerapp.model.entity.Question;
+import com.kemal.icebreakerapp.model.enums.QuestionType;
 import com.kemal.icebreakerapp.repository.QuestionRepository;
 import com.kemal.icebreakerapp.service.QuestionService;
 import com.kemal.icebreakerapp.exception.ResourceNotFoundException;
@@ -40,5 +41,11 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Question not found"));
         return questionMapper.toDTO(question);
+    }
+
+    @Override
+    public List<QuestionDTO> getQuestionListByType(QuestionType questionType) {
+        List<Question> questionList = questionRepository.findByType(questionType);
+        return questionMapper.toDTOList(questionList);
     }
 }

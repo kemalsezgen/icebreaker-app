@@ -40,7 +40,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
 }
 
 .header-right h1 {
@@ -52,4 +51,78 @@
   margin-left: 15px;
   padding: 0 20px;
   border-radius: 5px;
+}
+
+.update-icon {
+  margin-top: 7px;
+  margin-right: 5px;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.update-icon:hover {
+  color: #747893;
+}
+
+.update-username-container {
+  display: flex;
+  width: 90%;
+  height: 90%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.update-username-container input {
+  margin: 16px 0;
+  padding: 15px;
+  width: 88%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 18px;
+}
+
+.update-username-container input.input-error {
+  border: 1px solid red;
+}
+
+.update-username-container button {
+  padding: 10px 30px;
+  border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  .update-icon {
+    margin-top: 3px;
+    margin-right: 3px;
+    font-size: 24px;
+  }
+
+  .header-right button {
+    height: 32px;
+    margin-left: 0px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 16px;
+  }
+
+  .update-icon {
+    margin-top: 2px;
+    font-size: 16px;
+    margin-right: 2px;
+  }
+
+  .header-right button {
+    height: 28px;
+    margin-left: 0;
+    font-size: 10px;
+  }
 }

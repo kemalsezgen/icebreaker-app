@@ -57,17 +57,19 @@ const GameResultCard = ({ result, index }) => {
     <div key={index} className="result-item">
       <h2>Question {index + 1}</h2>
       <h3>{result.question.questionText}</h3>
-      <div className="chart">
-        <Pie
-          data={chartData}
-          options={chartOptions}
-          style={{
-            width: "80%",
-            maxWidth: "300px",
-            height: "300px",
-            margin: "0 auto",
-          }}
-        />
+      <div className="result-graph">
+        <div className="chart">
+          <Pie
+            data={chartData}
+            options={chartOptions}
+            style={{
+              width: "80%",
+              maxWidth: "300px",
+              height: "300px",
+              margin: "0 auto",
+            }}
+          />
+        </div>
       </div>
     </div>
   );

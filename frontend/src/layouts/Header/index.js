@@ -1,14 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context";
 import { Link } from "react-router-dom";
 import { logout } from "../../services/api";
 import "./Header.css";
+import UpdateUsernameModal from "../../components/Modals/UpdateUsernameModal";
+import { FaEdit } from "react-icons/fa";
 
 const Header = ({ roomId }) => {
   const navigate = useNavigate();
   const { roomName, joinedToRoom, username, token, setInputError } =
     useContext(Context);
+  const [isUpdateUsernameModalOpen, setIsUpdateUsernameModalOpen] =
+    useState(false);
+
+  const closeModal = () => {
+    setIsUpdateUsernameModalOpen(false);
+  };
 
   const handleLogout = async () => {
     try {
@@ -19,6 +27,10 @@ const Header = ({ roomId }) => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const openUpdateUsernameModal = () => {
+    setIsUpdateUsernameModalOpen(true);
   };
 
   return (
@@ -33,10 +45,19 @@ const Header = ({ roomId }) => {
       )}
       {joinedToRoom && roomName && (
         <div className="header-right">
+          <h2 className="update-icon">
+            <FaEdit onClick={openUpdateUsernameModal} />
+          </h2>
           <h1>{username}</h1>
-          <button onClick={handleLogout}>logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       )}
+
+      <UpdateUsernameModal
+        isUpdateUsernameModalOpen={isUpdateUsernameModalOpen}
+        setIsUpdateUsernameModalOpen={setIsUpdateUsernameModalOpen}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

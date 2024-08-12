@@ -1,0 +1,52 @@
+.online-users-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #1a1f3c;
+  align-self: flex-start;
+  margin-left: 20px;
+}
+
+.online-users-buttons {
+  display: flex;
+}
+
+.online-users-buttons.expanded {
+  padding-bottom: 15px;
+  border-bottom: 2px solid #1a1f3c;
+}
+
+.online-users-buttons button {
+  height: 40px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.online-users-buttons button:first-child {
+  width: 150px;
+  text-align: center;
+}
+
+.online-users-buttons button+button {
+  margin-left: 10px;
+}
+
+.online-users-buttons button:focus {
+  outline: none;
+}
+
+.userlist h3 {
+  margin: 10px 0;
+  font-size: 24px;
+}
+
+.userlist p {
+  margin-top: 8px;
+  font-size: 20px;
+}

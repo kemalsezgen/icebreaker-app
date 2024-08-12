@@ -7,6 +7,7 @@ import com.kemal.icebreakerapp.model.dto.*;
 import com.kemal.icebreakerapp.model.entity.*;
 import com.kemal.icebreakerapp.model.enums.AnswerType;
 import com.kemal.icebreakerapp.model.enums.GameSessionStatus;
+import com.kemal.icebreakerapp.model.enums.QuestionType;
 import com.kemal.icebreakerapp.repository.*;
 import com.kemal.icebreakerapp.service.GameSessionService;
 import com.kemal.icebreakerapp.service.QuestionService;
@@ -50,8 +51,8 @@ public class GameSessionServiceImpl implements GameSessionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public CreateSessionResponse createSession(String roomCode, Integer questionCount) {
-        Optional<GameSession> existGameSession = gameSessionRepository.findByRoomCodeAndStatus(roomCode, GameSessionStatus.ACTIVE);
+    public CreateSessionResponse createSession(StartSessionRequest request) {
+        Optional<GameSession> existGameSession = gameSessionRepository.findByRoomCodeAndStatus(request.getRoomCode(), GameSessionStatus.ACTIVE);
 
         if (existGameSession.isPresent()) {
             existGameSession.get().setStatus(GameSessionStatus.PASSIVE);
@@ -59,16 +60,22 @@ public class GameSessionServiceImpl implements GameSessionService {
         }
 
         GameSession gameSession = new GameSession();
-        gameSession.setRoomCode(roomCode);
-        gameSession.setQuestionCount(questionCount);
+        gameSession.setRoomCode(request.getRoomCode());
+        gameSession.setQuestionCount(request.getQuestionCount());
         gameSession.setStatus(GameSessionStatus.ACTIVE);
         GameSession savedGameSession = gameSessionRepository.save(gameSession);
 
         CreateSessionResponse createSessionResponse = new CreateSessionResponse();
         createSessionResponse.setSessionId(savedGameSession.getId());
 
-        List<QuestionDTO> questionDTOList = questionService.getAllQuestions();
-        List<QuestionDTO> questionListForSession = getRandomQuestions(questionDTOList, questionCount);
+        List<QuestionDTO> questionDTOList;
+        if (request.getQuestionType().equals(QuestionType.MIX)) {
+            questionDTOList = questionService.getAllQuestions();
+        } else {
+            questionDTOList = questionService.getQuestionListByType(request.getQuestionType());
+        }
+
+        List<QuestionDTO> questionListForSession = getRandomQuestions(questionDTOList, request.getQuestionCount());
         createSessionResponse.setQuestionList(questionListForSession);
 
         // Save selected questions to GameSessionQuestion
